@@ -1,30 +1,29 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>User:</b>
-  <%= @upload.user_id %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @upload.name %>
-</p>
-
-<p>
-  <b>Date:</b>
-  <%= @upload.date %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @upload.status %>
-</p>
-
-<p>
-  <b>Info:</b>
-  <%= @upload.info %>
-</p>
-
-
 <%= link_icon_to :back, 'Back', uploads_path %>
 <%= link_icon_to :edit, 'Edit', edit_upload_path(@upload)%>
+
+<p id="notice"><%= notice %></p>
+
+<%= render @upload %>
+
+<p>
+
+<applet code="wjhk.jupload2.JUploadApplet" archive="/applets/jupload-5.0.7.jar"
+        mayscript="true" alt="The java plugin must be installed."
+        name="JUpload" width="640" height="400">
+  <param name="CODE" value="wjhk.jupload2.JUploadApplet">
+  <param name="ARCHIVE" value="/applets/jupload-5.0.7.jar">
+  <param name="type" value="application/x-java-applet;version=1.5">
+  <param name="mayscript" value="true">
+  <param name="scriptable" value="true">
+  <param NAME = "serverProtocol" value="HTTP/1.1">
+<!--  <param name="postURL" value="http://localhost:3000/uploads/<%= @upload.id %>/upload">-->
+  <param name="postURL" value="<%= @upload.id %>/upload">
+  <param name="maxChunkSize" value="0">
+  <param name="nbFilesPerRequest" value="1">
+  <param name="sendMD5Sum" value="true">
+  <param name="showLogWindow" value="false">
+  <param name="lookAndFeel" value="system">
+  <param name="afterUploadURL" value="http://localhost:3000/uploads/<%= @upload.id %>/upload">
+  Java 1.5 or higher plugin required.
+</applet>
+

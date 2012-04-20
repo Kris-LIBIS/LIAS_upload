@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Upload:</b>
+  <%= @uploaded_file.upload_id %>
+</p>
+
+<p>
+  <b>Source path:</b>
+  <%= @uploaded_file.source_path %>
+</p>
+
+<p>
+  <b>Relative path:</b>
+  <%= @uploaded_file.relative_path %>
+</p>
+
+<p>
+  <b>File name:</b>
+  <%= @uploaded_file.file_name %>
+</p>
+
+<p>
+  <b>Modification date:</b>
+  <%= @uploaded_file.modification_date %>
+</p>
+
+<p>
+  <b>Mimetype:</b>
+  <%= @uploaded_file.mimetype %>
+</p>
+
+<p>
+  <b>Md5sum:</b>
+  <%= @uploaded_file.md5sum %>
+</p>
+
+
+<%= link_to 'Edit', edit_uploaded_file_path(@uploaded_file) %> |
+<%= link_to 'Back', uploaded_files_path %>

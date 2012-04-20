@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  upload_id: 1
+  source_path: MyString
+  relative_path: MyString
+  file_name: MyString
+  modification_date: 2012-04-20 12:17:05
+  mimetype: MyString
+  md5sum: MyString
+
+two:
+  upload_id: 1
+  source_path: MyString
+  relative_path: MyString
+  file_name: MyString
+  modification_date: 2012-04-20 12:17:05
+  mimetype: MyString
+  md5sum: MyString

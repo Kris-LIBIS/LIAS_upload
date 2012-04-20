@@ -1,0 +1,21 @@
+<h1>Listing uploaded_files</h1>
+
+<p>Upload: ???</p>
+
+<table border="1">
+
+  <tr>
+    <th>Upload</th>
+    <th>File path</th>
+    <th>Modification date</th>
+    <th>Mimetype</th>
+    <th>Md5sum</th>
+  </tr>
+
+  <%= render @uploaded_files %>
+
+</table>
+
+<br />
+
+<%= link_to 'Add files', new_uploaded_file_path %>

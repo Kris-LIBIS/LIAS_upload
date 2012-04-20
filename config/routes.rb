@@ -1,5 +1,10 @@
 LIASUpload::Application.routes.draw do
+  resources :uploaded_files
+
+  match '/uploads/:id/upload' => 'uploads#upload', as: :upload_file
+
   resources :uploads
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

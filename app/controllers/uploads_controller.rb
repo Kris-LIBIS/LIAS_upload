@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class UploadsController < ApplicationController
   # GET /uploads
   # GET /uploads.json
@@ -74,10 +76,39 @@ class UploadsController < ApplicationController
   def destroy
     @upload = Upload.find(params[:id])
     @upload.destroy
-
+    1
     respond_to do |format|
       format.html { redirect_to uploads_url }
       format.json { head :no_content }
     end
+  end
+
+  # PUT /uploads/1/upload
+  def upload
+    @upload = Upload.find(params[:id])
+
+    respond_to do |format|
+      if params[:File0]
+        new_file = {}
+        new_file[:upload_id] = @upload.id
+        new_file[:file_name] = params[:File0].original_filename
+        new_file[:source_path] = params[:pathinfo0]
+        new_file[:relative_path] = params[:relpathinfo0]
+        new_file[:mimetype] = params[:File0].content_type
+        new_file[:md5sum] = params[:md5sum0]
+#        new_file[:modification_date] = params[:filemodificationdate0]
+        target_path = ['/tmp/uploads/']
+        target_path << new_file[:relative_path]
+        FileUtils.mkdir_p target_path.join('/'), mode: 0777
+        target_path << new_file[:file_name]
+        params[:File0].tempfile
+        File.open(target_path.join('/'), 'wb') { |f| f.write(params[:File0].read) }
+        UploadedFile.new(new_file).save
+        format.html
+      else
+        format.html
+      end
+    end
+
   end
 end
