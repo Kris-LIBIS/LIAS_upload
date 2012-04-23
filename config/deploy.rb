@@ -44,6 +44,10 @@ namespace :deploy do
     run "cd #{current_path}; rake db:seed RAILS_ENV=production"
   end
 
+  task :precompile do
+    run "cd #{current_path}; rake assets:precompile RAILS_ENV=production"
+  end
+
   task :load_fixtures do
     run "cd #{current_path}; rake db:fixtures:load RAILS_ENV=production"
   end
