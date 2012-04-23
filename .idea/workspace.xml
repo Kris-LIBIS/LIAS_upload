@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list id="d8d76e3c-316d-4310-8664-bd0cd3cdb1f3" name="Default" comment="" />
     <list default="true" id="47a88054-ee58-4da8-bf18-2ebe2e660727" name="New changelist" comment="Upload scaffold generated">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/uploads/show.html.erb" afterPath="$PROJECT_DIR$/app/views/uploads/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/deploy.rb" afterPath="$PROJECT_DIR$/config/deploy.rb" />
     </list>
     <ignored path="LIAS_upload.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,16 +33,25 @@
       <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Gemfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="704" selection-end="704" vertical-scroll-proportion="0.0">
+            <state line="9" column="7" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deploy.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="deploy.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/deploy.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
+            <state line="24" column="0" selection-start="772" selection-end="772" vertical-scroll-proportion="0.15672913">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Capfile" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Capfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -65,10 +75,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="show.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/uploads/show.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="38" selection-start="1090" selection-end="1090" vertical-scroll-proportion="0.6660746">
+            <state line="25" column="38" selection-start="1090" selection-end="1090" vertical-scroll-proportion="-15.625">
               <folding />
             </state>
           </provider>
@@ -104,8 +114,8 @@
         <option value="$PROJECT_DIR$/app/controllers/uploads_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/uploaded_files/_uploaded_file.html.erb" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/config/deploy.rb" />
         <option value="$PROJECT_DIR$/app/views/uploads/show.html.erb" />
+        <option value="$PROJECT_DIR$/config/deploy.rb" />
       </list>
     </option>
   </component>
@@ -927,11 +937,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/uploaded_files/new.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="20" selection-start="48" selection-end="48" vertical-scroll-proportion="-1.25" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/uploaded_files/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -996,23 +1001,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
+    <entry file="file://$PROJECT_DIR$/app/views/uploads/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="704" selection-end="704" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/deploy.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/uploads_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="47" selection-start="2595" selection-end="2595" vertical-scroll-proportion="0.0">
+        <state line="25" column="38" selection-start="1090" selection-end="1090" vertical-scroll-proportion="-15.625">
           <folding />
         </state>
       </provider>
@@ -1024,9 +1015,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/uploads/show.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/uploads_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="38" selection-start="1090" selection-end="1090" vertical-scroll-proportion="0.6660746">
+        <state line="100" column="47" selection-start="2595" selection-end="2595" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Capfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="7" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/deploy.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="772" selection-end="772" vertical-scroll-proportion="0.15672913">
           <folding />
         </state>
       </provider>

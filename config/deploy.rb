@@ -41,7 +41,11 @@ namespace :deploy do
   end
 
   task :seed do
-    run "cd #{current_path}; rake db:seed RAILS_ENV=development"
+    run "cd #{current_path}; rake db:seed RAILS_ENV=production"
+  end
+
+  task :load_fixtures do
+    run "cd #{current_path}; rake db:fixtures:load RAILS_ENV=production"
   end
 end
 
