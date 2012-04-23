@@ -1,3 +1,4 @@
+require 'pathname'
 require 'fileutils'
 
 class UploadsController < ApplicationController
@@ -97,12 +98,11 @@ class UploadsController < ApplicationController
         new_file[:mimetype] = params[:File0].content_type
         new_file[:md5sum] = params[:md5sum0]
 #        new_file[:modification_date] = params[:filemodificationdate0]
-        target_path = ['/tmp/uploads/']
-        target_path << new_file[:relative_path]
-        FileUtils.mkdir_p target_path.join('/'), mode: 0777
-        target_path << new_file[:file_name]
-        params[:File0].tempfile
-        File.open(target_path.join('/'), 'wb') { |f| f.write(params[:File0].read) }
+        target_path = Pathname.new '/temp/uploads'
+        target_path += new_file[:relative_path]
+        target_path += new_file[:file_name]
+        FileUtils.mkdir_p target_path.dirname, mode: 0777
+        File.open(target_path, 'wb') { |f| f.write(params[:File0].read) }
         UploadedFile.new(new_file).save
         format.html
       else
