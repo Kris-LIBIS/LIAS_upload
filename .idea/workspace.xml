@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list id="d8d76e3c-316d-4310-8664-bd0cd3cdb1f3" name="Default" comment="" />
     <list default="true" id="47a88054-ee58-4da8-bf18-2ebe2e660727" name="New changelist" comment="Upload scaffold generated">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/deploy.rb" afterPath="$PROJECT_DIR$/config/deploy.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/uploads_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/uploads_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/uploads/show.html.erb" afterPath="$PROJECT_DIR$/app/views/uploads/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.yml" afterPath="$PROJECT_DIR$/config/database.yml" />
     </list>
     <ignored path="LIAS_upload.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,19 +40,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deploy.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="deploy.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/deploy.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="29" selection-start="1456" selection-end="1456" vertical-scroll-proportion="0.61669505">
+            <state line="47" column="29" selection-start="1456" selection-end="1456" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="database.yml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="database.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/database.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="33" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
+            <state line="24" column="13" selection-start="592" selection-end="592" vertical-scroll-proportion="0.6132879">
               <folding />
             </state>
           </provider>
@@ -68,7 +70,7 @@
       <file leaf-file-name="uploads_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/uploads_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="47" selection-start="2595" selection-end="2595" vertical-scroll-proportion="0.0">
+            <state line="106" column="0" selection-start="2856" selection-end="2856" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -86,7 +88,7 @@
       <file leaf-file-name="show.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/uploads/show.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="38" selection-start="1090" selection-end="1090" vertical-scroll-proportion="-15.625">
+            <state line="19" column="65" selection-start="844" selection-end="844" vertical-scroll-proportion="-11.875">
               <folding />
             </state>
           </provider>
@@ -118,12 +120,12 @@
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/uploads/upload.html.erb" />
         <option value="$PROJECT_DIR$/app/views/uploads/_upload.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/uploads_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/uploaded_files/_uploaded_file.html.erb" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/app/views/uploads/show.html.erb" />
-        <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/config/deploy.rb" />
+        <option value="$PROJECT_DIR$/app/views/uploads/show.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/uploads_controller.rb" />
+        <option value="$PROJECT_DIR$/config/database.yml" />
       </list>
     </option>
   </component>
@@ -1004,37 +1006,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/uploads/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="38" selection-start="1090" selection-end="1090" vertical-scroll-proportion="-15.625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/uploads/upload.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="-3.75">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/uploads_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="47" selection-start="2595" selection-end="2595" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="7" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/database.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="33" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1048,7 +1022,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/deploy.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="29" selection-start="1456" selection-end="1456" vertical-scroll-proportion="0.61669505">
+        <state line="47" column="29" selection-start="1456" selection-end="1456" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/uploads/upload.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="-3.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/uploads/show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="65" selection-start="844" selection-end="844" vertical-scroll-proportion="-11.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/uploads_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="0" selection-start="2856" selection-end="2856" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="592" selection-end="592" vertical-scroll-proportion="0.6132879">
           <folding />
         </state>
       </provider>

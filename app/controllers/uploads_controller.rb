@@ -104,10 +104,8 @@ class UploadsController < ApplicationController
         params[:File0].tempfile
         File.open(target_path.join('/'), 'wb') { |f| f.write(params[:File0].read) }
         UploadedFile.new(new_file).save
-        format.html
-      else
-        format.html
       end
+      format.html
     end
 
   end
