@@ -1,25 +1,26 @@
-<!--
-SUCCESS
--->
-<h1>Upload to <%= upload.name %></h1>
-<p>Id: <%= upload.id %></p>
-<p>User: <%= upload.user_id %></p>
-<p>Date: <%= upload.date %></p>
+<div class="upload_info">
+  <h1>Upload to <%= upload.name %></h1>
+  <p>Id: <%= upload.id %></p>
+  <p>User: <%= upload.user_id %></p>
+  <p>Date: <%= upload.date %></p>
+</div>
 
-<p>
+<div class="upload_files">
 
-<h3>Uploaded files:</h3>
+  <h3>Uploaded files:</h3>
 
-<table border="1">
+  <table border="1">
 
-  <tr>
-    <th>File path</th>
-    <th>Modification date</th>
-    <th>Mimetype</th>
-    <th>Md5sum</th>
-    <th colspan="3">Actions</th>
-  </tr>
+    <tr>
+      <th>File path</th>
+      <th>Modification date</th>
+      <th>Mimetype</th>
+      <th>Md5sum</th>
+      <th colspan="3">Actions</th>
+    </tr>
 
-  <%= render(upload.uploaded_files) %>
+    <%= render(upload.uploaded_files) %>
 
-</table>
+  </table>
+
+</div>

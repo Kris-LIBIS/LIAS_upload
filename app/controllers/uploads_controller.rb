@@ -1,5 +1,6 @@
 require 'pathname'
 require 'fileutils'
+require 'digest/md5'
 
 class UploadsController < ApplicationController
   # GET /uploads
@@ -89,24 +90,59 @@ class UploadsController < ApplicationController
     @upload = Upload.find(params[:id])
 
     respond_to do |format|
-      if params[:File0]
-        new_file = {}
-        new_file[:upload_id] = @upload.id
-        new_file[:file_name] = params[:File0].original_filename
-        new_file[:source_path] = params[:pathinfo0]
-        new_file[:relative_path] = params[:relpathinfo0]
-        new_file[:mimetype] = params[:File0].content_type
-        new_file[:md5sum] = params[:md5sum0]
-#        new_file[:modification_date] = params[:filemodificationdate0]
-        target_path = Pathname.new '/temp/uploads'
-        target_path += new_file[:relative_path]
-        target_path += new_file[:file_name]
+      if (file_data = params[:File0])
+        base_dir = Pathname.new upload_dir(@upload)
+        relative_path = params[:relpathinfo0]
+        target_dir = base_dir + relative_path
+
+        file_name = file_data.original_filename
+        target_path = target_dir + file_name
+
+        if target_path.relative_path_from(base_dir).to_s =~ /^\.\./
+          return render text: 'ERROR : illegal relative path'
+        end
+
+        # create target folder
         FileUtils.mkdir_p target_path.dirname, mode: 0777
-        File.open(target_path, 'wb') { |f| f.write(params[:File0].read) }
-        UploadedFile.new(new_file).save
+
+        # copy the file from temp location to final target
+        File.open(target_path, 'wb') { |f| f.write(file_data.read) }
+
+        # check MD5 checksum
+        md5sum = params[:md5sum0]
+        digest = ::Digest::MD5.new()
+        File.open(target_path, 'rb') do |f|
+          while data = f.read(1000000)
+            digest << data
+          end
+        end
+        unless digest == md5sum
+          return render text: "ERROR: md5sum check failed. Uploaded data seems to be corrupt; please try uploading the files again."
+        end
+
+        # create file object in DB
+        UploadedFile.new(
+            upload_id: @upload.id,
+            file_name: file_name,
+            source_path: params[:pathinfo0],
+            relative_path: relative_path,
+            mimetype: file_data.content_type,
+            md5sum: md5sum,
+            # modification_date: params[:filemodificationdate0],
+            local_path: target_path
+        ).save
+        return render text: 'SUCCESS'
       end
       format.html
     end
-
   end
+
+  private
+
+  def upload_dir(upload)
+    dir = Pathname.new(super())
+    dir = dir.join(upload.id.to_s)
+    dir.to_s
+  end
+
 end
