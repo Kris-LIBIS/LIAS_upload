@@ -129,7 +129,7 @@ class UploadsController < ApplicationController
             mimetype: file_data.content_type,
             md5sum: md5sum,
             # modification_date: params[:filemodificationdate0],
-            local_path: target_path
+            local_path: target_path.to_s
         ).save
         return render text: 'SUCCESS'
       end
