@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120420101705) do
+ActiveRecord::Schema.define(:version => 20120424144938) do
 
   create_table "uploaded_files", :force => true do |t|
     t.integer  "upload_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20120420101705) do
     t.string   "md5sum"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.string   "local_path"
   end
 
   create_table "uploads", :force => true do |t|
