@@ -21,10 +21,12 @@ end
 # Production
 group :production do
   platforms :jruby do
-    gem 'jdbc-mysql'
+    gem 'jdbc-sqlite3', :require => false
+#    gem 'jdbc-mysql'
   end
   platforms :ruby do
-    gem 'mysql2'
+    gem 'sqlite3-ruby', :require => 'sqlite3'
+#    gem 'mysql2'
   end
 end
 
