@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class UploadedFilesController < ApplicationController
   # GET /uploaded_files
   # GET /uploaded_files.json
@@ -73,10 +75,11 @@ class UploadedFilesController < ApplicationController
   # DELETE /uploaded_files/1.json
   def destroy
     @uploaded_file = UploadedFile.find(params[:id])
+    FileUtils.rm_f @uploaded_file.local_path
     @uploaded_file.destroy
 
     respond_to do |format|
-      format.html { redirect_to uploaded_files_url }
+      format.html { redirect_to  uploads_path }
       format.json { head :no_content }
     end
   end
