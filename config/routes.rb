@@ -1,4 +1,6 @@
 LIASUpload::Application.routes.draw do
+  resources :organizations
+
   resources :uploaded_files
 
   match '/uploads/:id/upload' => 'uploads#upload', as: :upload_file
