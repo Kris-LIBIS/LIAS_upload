@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  upload_id: 1
+  upload: one
   source_path: MyString
   relative_path: MyString
   file_name: MyString
@@ -10,7 +10,7 @@ one:
   md5sum: MyString
 
 two:
-  upload_id: 1
+  upload: two
   source_path: MyString
   relative_path: MyString
   file_name: MyString

@@ -1,0 +1,30 @@
+<div class="upload_applet">
+
+  <form name="post_info">
+    <input name="authenticity_token" type="hidden" value="<%= "#{form_authenticity_token}" if protect_against_forgery? %>">
+  </form>
+
+  <applet code="wjhk.jupload2.JUploadApplet" archive="/applets/jupload.jar"
+          mayscript="true" alt="The java plugin must be installed."
+          name="JUpload" width="640" height="400">
+    <param name="CODE" value="wjhk.jupload2.JUploadApplet" />
+    <param name="ARCHIVE" value="/applets/jupload.jar" />
+    <param name="lang" value="<%= session[:locale] %>" />
+    <param name="lookAndFeel" value="com.nilo.plaf.nimrod.NimRODLookAndFeel" />
+    <param name="type" value="application/x-java-applet;version=1.5" />
+    <param name="mayscript" value="true" />
+    <param name="scriptable" value="true" />
+    <param name="serverProtocol" value="HTTP/1.1" />
+    <param name="postURL" value="/uploads/<%= @upload.id %>/upload" />
+    <param name="maxChunkSize" value="0" />
+    <param name="nbFilesPerRequest" value="1" />
+    <param name="sendMD5Sum" value="true" />
+    <param name="lookAndFeel" value="system" />
+    <param name="afterUploadURL" value="/uploads/<%= @upload.id %>" />
+    <param name="formData" value="post_info" />
+    <param name="showLogWindow" value="onError" />
+
+    Java 1.5 or higher plugin required.
+  </applet>
+
+</div>

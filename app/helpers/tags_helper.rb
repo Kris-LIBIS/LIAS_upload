@@ -8,7 +8,7 @@ module TagsHelper
   end
 
   def icon_tag(action, options = {})
-    icon_size = ICON_SIZE[options.delete(:icon_size)] || ICON_SIZE[:normal]
+    icon_size = ICON_SIZE[options.delete(:icon_size)] || ICON_SIZE[:tiny]
     icon_name = ACTION_TO_ICON[action.to_sym]
     icon_path = "/assets/must_have_icon_set/#{icon_name}/#{icon_name}_#{icon_size}.png"
     options[:width], options[:height] = icon_size.split("x")

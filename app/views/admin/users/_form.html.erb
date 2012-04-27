@@ -1,0 +1,75 @@
+<div class="user_form">
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%=raw t('errors.template.header', count: @user.errors.count,
+        model: t('activerecord.models.user')) %>.</h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%=raw msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <% if @user.id %>
+    <% options = { url: admin_user_path(@user), method: :put } %>
+  <% else %>
+    <% options = { url: admin_users_path, method: :post } %>
+  <% end %>
+
+  <%= form_for(@user, options) do |f| %>
+
+    <fieldset>
+
+      <legend>Enter user details</legend>
+
+      <div class="field">
+        <%= f.label :name %>
+        <br/>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :email %>
+        <br/>
+        <%= f.email_field :email %>
+      </div>
+      <div class="field">
+        <%= f.label :upload_dir %>
+        <br/>
+        <%= f.text_field :upload_dir %>
+      </div>
+      <div class="field">
+        <%= f.label :organization_id %>
+        <br/>
+        <%= f.collection_select :organization_id, Organization.all(order: "name ASC"), :id, :name %>
+      </div>
+      <div class="field">
+        <%= f.label :admin %>
+        <br/>
+        <%= f.check_box :admin, {:checked => @user.admin}, 1, 0 %>
+      </div>
+      <div>
+        <%= f.label :password, 'Password' %>:
+        <%= f.password_field :password, size: 40 %>
+      </div>
+
+      <div>
+        <%= f.label :password_confirmation, 'Confirm' %>:
+        <%= f.password_field :password_confirmation, size: 40 %>
+      </div>
+
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+
+    </fieldset>
+
+  <% end %>
+
+
+</div>

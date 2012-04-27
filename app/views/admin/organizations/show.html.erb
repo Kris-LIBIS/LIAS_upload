@@ -1,5 +1,4 @@
-<p id="notice"><%= notice %></p>
-
+<h1>Organization</h1>
 <p>
   <b>Name:</b>
   <%= @organization.name %>
@@ -15,6 +14,5 @@
   <%= @organization.contact %>
 </p>
 
-
-<%= link_to 'Edit', edit_organization_path(@organization) %> |
-<%= link_to 'Back', organizations_path %>
+<%= link_to 'Edit', edit_admin_organization_path(@organization) %> |
+<%= link_to 'Users', admin_organization_users_path(@organization) %>

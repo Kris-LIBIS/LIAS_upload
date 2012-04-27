@@ -1,0 +1,38 @@
+<h1>Listing uploaded_files<%= " for #{@upload.name}" if @upload %></h1>
+
+<%= form_tag admin_uploaded_file_path, :method => 'get', :class => 'upload_filter' do %>
+  Filter:
+  <%= select_tag :upload_id,
+                 options_from_collection_for_select(Upload.find_all_by_user_id(session[:user_id]), :id, :name, @upload ? @upload.id : 0), prompt: '-- all uploads --',
+                 onchange: 'this.form.submit()' %>
+  <%= submit_tag 'apply' %>
+  <%= javascript_tag "$('.upload_filter input').hide()" %>
+
+  <% if @upload %>
+    <%= link_icon_to :view, 'Show', upload_path(@upload) %>
+  <% end %>
+
+<% end %>
+
+<table  class="tablesorter">
+
+  <thead>
+  <tr>
+    <% unless @upload %>
+      <th>Upload</th>
+      <% end %>
+    <th>Upload</th>
+    <th>File path</th>
+    <th>Mimetype</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <%= render @uploaded_files %>
+  </tbody>
+
+</table>
+
+<br />
+
+<%= link_to 'Add files', new_uploaded_file_path %>

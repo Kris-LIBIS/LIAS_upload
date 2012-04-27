@@ -9,3 +9,8 @@ two:
   name: MyString
   upload_directory: MyString
   contact: MyString
+
+libis:
+  name: LIBIS
+  upload_directory: libis
+  contact: sam.alloing@libis.be

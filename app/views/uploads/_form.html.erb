@@ -1,41 +1,64 @@
-<%= form_for @upload do |f| %>
-    <% if @upload.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:</h2>
+<div class="upload_form">
 
-          <ul>
-            <% @upload.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+  <% if @upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= raw t('errors.template.header', count: @upload.errors.count,
+                    model: t('activerecord.models.upload')) %>.</h2>
 
-    <table>
-      <tr class="field">
-        <td><%= f.label :user_id %></td>
-        <td><%= f.number_field :user_id %></td>
-      </tr>
-      <tr class="field">
-        <td><%= f.label :name %></td>
-        <td><%= f.text_field :name %></td>
-      </tr>
-      <tr class="field">
-        <td><%= f.label :date %></td>
-        <td><%= f.datetime_select :date %></td>
-      </tr>
-      <tr class="field">
-        <td><%= f.label :status %></td>
-        <td><%= f.number_field :status %></td>
-      </tr>
-      <tr class="field">
-        <td><%= f.label :info %></td>
-        <td><%= f.text_area :info, size: "40x3" %></td>
-      </tr>
-    </table>
+      <p><%= t('errors.template.body') %></p>
 
-
-    <div class="actions">
-      <%= f.submit '' %>
+      <ul>
+        <% @upload.errors.full_messages.each do |msg| %>
+          <li><%= raw msg %></li>
+        <% end %>
+      </ul>
     </div>
-<% end %>
+  <% end %>
+
+
+  <% if @upload.id %>
+    <% options = {url: upload_path(@upload), method: :put} %>
+  <% else %>
+    <% options = {url: uploads_path, method: :post} %>
+  <% end %>
+
+  <% unless @upload.date %>
+    <% @upload.date = Time.now %>
+  <% end %>
+
+  <%= form_for @upload, options do |f| %>
+
+    <fieldset>
+
+      <legend>Enter upload details</legend>
+
+      <div class="field">
+        <%= f.label :name, 'Directory' %>
+        <br/>
+        <%= f.text_field :name %>
+      </div>
+
+      <div class="field">
+        <%= f.label :date %>
+        : <%= @upload.date %>
+      </div>
+
+      <div class="field">
+        <%= f.label :status %>
+        : <%= @upload.status %>
+      </div>
+
+      <div class="field">
+        <%= f.label :info %>
+        : <%= @upload.info %>
+      </div>
+
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    </fieldset>
+  <% end %>
+
+</div>
+

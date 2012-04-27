@@ -1,8 +1,10 @@
-class OrganizationsController < ApplicationController
-  # GET /organizations
-  # GET /organizations.json
+class Admin::OrganizationsController < ApplicationController
+  before_filter :administrator
+
+  # GET /admin/organizations
+  # GET /admin/organizations.json
   def index
-    @organizations = Organization.all
+    @organizations = Organization.all(order: 'name ASC')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +12,8 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/1
-  # GET /organizations/1.json
+  # GET /admin/organizations/1
+  # GET /admin/organizations/1.json
   def show
     @organization = Organization.find(params[:id])
 
@@ -21,8 +23,8 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/new
-  # GET /organizations/new.json
+  # GET /admin/organizations/new
+  # GET /admin/organizations/new.json
   def new
     @organization = Organization.new
 
@@ -32,19 +34,19 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/1/edit
+  # GET /admin/organizations/1/edit
   def edit
     @organization = Organization.find(params[:id])
   end
 
-  # POST /organizations
-  # POST /organizations.json
+  # POST /admin/organizations
+  # POST /admin/organizations.json
   def create
     @organization = Organization.new(params[:organization])
 
     respond_to do |format|
       if @organization.save
-        format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
+        format.html { redirect_to admin_organizations_path, notice: "Organization #{@organization.name} was successfully created." }
         format.json { render json: @organization, status: :created, location: @organization }
       else
         format.html { render action: "new" }
@@ -53,14 +55,14 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # PUT /organizations/1
-  # PUT /organizations/1.json
+  # PUT /admin/organizations/1
+  # PUT /admin/organizations/1.json
   def update
     @organization = Organization.find(params[:id])
 
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
-        format.html { redirect_to @organization, notice: 'Organization was successfully updated.' }
+        format.html { redirect_to admin_organization_path(@organization), notice: "Organization #{@organization.name} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -69,14 +71,18 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # DELETE /organizations/1
-  # DELETE /organizations/1.json
+  # DELETE /admin/organizations/1
+  # DELETE /admin/organizations/1.json
   def destroy
     @organization = Organization.find(params[:id])
-    @organization.destroy
+    begin
+      @organization.destroy
+    rescue Exception => e
+      flash[:alert] = e.message
+    end
 
     respond_to do |format|
-      format.html { redirect_to organizations_url }
+      format.html { redirect_to admin_organizations_path }
       format.json { head :no_content }
     end
   end

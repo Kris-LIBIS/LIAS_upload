@@ -1,0 +1,71 @@
+<h1>List of uploads<%= " for #{@user.name}" if @user %></h1>
+
+<% if @user%>
+  <%= javascript_tag "$(document).ready(function () {$('#admin_uploads_table').tablesorter({ headers: { 5: { sorter: false } }, sortList: [[0,0] });});" %>
+<% else %>
+  <%= javascript_tag "$(document).ready(function () {$('#admin_uploads_table').tablesorter({ headers: { 6: { sorter: false } }, sortList: [[0,0], [1,0]] });});" %>
+<% end %>
+
+<%= form_tag admin_uploads_path, :method => 'get', :class => 'user_filter' do %>
+  Filter:
+  <%= select_tag :user_id,
+                 options_from_collection_for_select(User.all(order: "name ASC"), :id, :name, @user ? @user.id : 0), prompt: '-- all users --',
+                 onchange: 'this.form.submit()' %>
+  <%= submit_tag 'apply' %>
+  <%= javascript_tag "$('.user_filter input').hide()" %>
+
+  <% if @user %>
+    <%= link_icon_to :view, 'Show', admin_user_path(@user) %>
+  <% end %>
+
+<% end %>
+
+<table class="tablesorter" id="admin_uploads_table">
+  <thead>
+  <tr>
+    <% unless @user %>
+      <th>User</th>
+    <% end %>
+    <th>Date</th>
+    <th>Directory</th>
+    <th>Files</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @uploads.each do |upload| %>
+    <tr>
+      <% unless @user %>
+        <% if upload.user %>
+          <td><%= upload.user.name %>
+        <% else %>
+          <td> ------ </td>
+        <% end %>
+      <% end %>
+
+      <td><%= upload.date %></td>
+      <td><%= upload.name %></td>
+      <td><%= upload.uploaded_files.count %></td>
+      <td><%= upload.status %></td>
+
+      <td>
+        <%= link_icon_to :view, 'Show upload', admin_upload_path(upload) %>
+        <%= link_icon_to :edit, 'Edit upload', edit_admin_upload_path(upload) %>
+        <%= link_icon_to :delete, 'Delete upload', admin_upload_path(upload), {}, confirm: 'Are you sure?', method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br/>
+
+<!--
+<% if @user %>
+  <%= link_icon_to :add, 'New upload', new_admin_upload_path(user_id: @user.id), icon_size: :normal %>
+<% else %>
+  <%= link_icon_to :add, 'New upload', new_admin_upload_path, icon_size: :normal %>
+<% end %>
+-->

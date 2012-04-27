@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Upload:</b>
-  <%= @uploaded_file.upload_id %>
+  <%= @uploaded_file.upload.name %>
 </p>
 
 <p>
@@ -35,6 +33,4 @@
   <%= @uploaded_file.md5sum %>
 </p>
 
-
-<%= link_to 'Edit', edit_uploaded_file_path(@uploaded_file) %> |
-<%= link_to 'Back', uploaded_files_path %>
+<%=  link_icon_to :back, 'Back', upload_path(@uploaded_file.upload) %>

@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424144938) do
+ActiveRecord::Schema.define(:version => 20120425101446) do
+
+  create_table "organizations", :force => true do |t|
+    t.string   "name",             :null => false
+    t.string   "upload_directory", :null => false
+    t.string   "contact"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "uploaded_files", :force => true do |t|
     t.integer  "upload_id"
@@ -34,6 +42,17 @@ ActiveRecord::Schema.define(:version => 20120424144938) do
     t.text     "info"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name",                               :null => false
+    t.string   "email",                              :null => false
+    t.string   "upload_dir",                         :null => false
+    t.integer  "organization_id",                    :null => false
+    t.boolean  "admin",           :default => false, :null => false
+    t.string   "password_digest"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
 end

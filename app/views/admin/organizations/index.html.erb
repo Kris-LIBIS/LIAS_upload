@@ -1,0 +1,43 @@
+<h1>List of organizations</h1>
+
+<%= javascript_tag "$(document).ready(function () {$('table').tablesorter({ headers: { 4: { sorter: false } }, sortList: [[0,0]] });});" %>
+
+<table class="tablesorter">
+  <thead >
+  <tr>
+    <th>Name</th>
+    <th>Upload directory</th>
+    <th>Contact</th>
+    <th>Users</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <% @organizations.each do |organization| %>
+    <tr>
+      <td><%= organization.name %></td>
+      <td><%= organization.upload_directory %></td>
+      <td><%= organization.contact %></td>
+      <td>
+        <%= organization.users.count %>
+        <%= link_icon_to :view, 'Users', admin_organization_users_path(organization) %>
+      </td>
+      <td>
+        <%= link_icon_to :view, 'Show', admin_organization_path(organization) %>
+        <%= link_icon_to :edit, 'Edit', edit_admin_organization_path(organization) %>
+        <%= link_icon_to :delete, 'Destroy', admin_organization_path(organization),
+                         confirm: "This will remove the organization and all its users.\nAre you sure?", method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+
+  </tbody>
+
+</table>
+
+<br/>
+
+<%= link_icon_to :add, 'New Organization', new_admin_organization_path %>
+

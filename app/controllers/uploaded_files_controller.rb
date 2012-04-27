@@ -1,10 +1,10 @@
-require 'fileutils'
-
 class UploadedFilesController < ApplicationController
-  # GET /uploaded_files
-  # GET /uploaded_files.json
+
+  # GET /uploads/1/uploaded_files
+  # GET /uploads/1/uploaded_files.json
   def index
-    @uploaded_files = UploadedFile.all
+    @upload = Upload.find(params[:upload_id])
+    @uploaded_files = @upload.uploaded_files
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,8 +12,8 @@ class UploadedFilesController < ApplicationController
     end
   end
 
-  # GET /uploaded_files/1
-  # GET /uploaded_files/1.json
+  # GET /uploads/1/uploaded_files/1
+  # GET /uploads/1/uploaded_files/1.json
   def show
     @uploaded_file = UploadedFile.find(params[:id])
 
@@ -23,40 +23,13 @@ class UploadedFilesController < ApplicationController
     end
   end
 
-  # GET /uploaded_files/new
-  # GET /uploaded_files/new.json
-  def new
-    @uploaded_file = UploadedFile.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @uploaded_file }
-    end
-  end
-
-  # GET /uploaded_files/1/edit
+  # GET /uploads/1/uploaded_files/1/edit
   def edit
     @uploaded_file = UploadedFile.find(params[:id])
   end
 
-  # POST /uploaded_files
-  # POST /uploaded_files.json
-  def create
-    @uploaded_file = UploadedFile.new(params[:uploaded_file])
-
-    respond_to do |format|
-      if @uploaded_file.save
-        format.html { redirect_to @uploaded_file, notice: 'Uploaded file was successfully created.' }
-        format.json { render json: @uploaded_file, status: :created, location: @uploaded_file }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @uploaded_file.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /uploaded_files/1
-  # PUT /uploaded_files/1.json
+  # PUT /uploads/1/uploaded_files/1
+  # PUT /uploads/1/uploaded_files/1.json
   def update
     @uploaded_file = UploadedFile.find(params[:id])
 
@@ -71,15 +44,15 @@ class UploadedFilesController < ApplicationController
     end
   end
 
-  # DELETE /uploaded_files/1
-  # DELETE /uploaded_files/1.json
+  # DELETE /uploads/1/uploaded_files/1
+  # DELETE /uploads/1/uploaded_files/1.json
   def destroy
     @uploaded_file = UploadedFile.find(params[:id])
-    FileUtils.rm_f @uploaded_file.local_path
+    upload = @uploaded_file.upload
     @uploaded_file.destroy
 
     respond_to do |format|
-      format.html { redirect_to  uploads_path }
+      format.html { redirect_to  upload_path(upload) }
       format.json { head :no_content }
     end
   end

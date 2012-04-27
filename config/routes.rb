@@ -1,12 +1,40 @@
 LIASUpload::Application.routes.draw do
-  resources :organizations
 
-  resources :uploaded_files
+  scope '(:locale)' do
+    scope :module => 'admin' do
 
-  match '/uploads/:id/upload' => 'uploads#upload', as: :upload_file
+      controller :session do
+        get 'login' => :new
+        post 'login' => :create
+        delete 'logout' => :destroy
+      end
 
-  resources :uploads
+    end
 
+    match 'admin' => 'admin/admin#index', as: :admin
+
+    namespace :admin do
+
+      resources :organizations
+      resources :users
+      resources :uploads
+      resources :uploaded_files
+
+      match 'organizations/:organization_id/users' => 'users#index', as: :organization_users
+      match 'users/:user_id/uploads' => 'uploads#index', as: :user_uploads
+
+    end
+
+    resources :uploads do
+      resources :uploaded_files
+    end
+
+    match 'uploads/:id/upload' => 'uploads#upload', as: :uploads_upload
+    match 'uploads/:id/add_files' => 'uploads#add_files', as: :uploads_add_files
+
+    root to: 'front_end#index', as: :front_end
+
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,67 @@
+nl:
+
+# menu
+  menu:
+    administration:      'Systeem beheer'
+    organizations:       'Organizaties'
+    users:               'Gebruikers'
+    uploads:             'Oplaadsessies'
+    uploaded_files:      'Opgeladen bestanden'
+    my_uploads:          'Mijn oplaadsessies'
+
+  login:
+    login:    'Aanmelden'
+    logout:   'Afmelden'
+
+
+  password:           'wachtwoord'
+  password_confirm:   'bevestig wachtwoord'
+
+  date:
+    order:        ''
+    formats:
+      default:    '%d/%m/%Y'
+      short:      '%b %d'
+      long:       '%B %d, %Y'
+
+  activerecord:
+    models:
+      organization:   'organizatie'
+      user:           'gebruiker'
+      upload:         'oplaadsessie'
+      uploaded_file:  'bestand'
+    attributes:
+      organization:
+        name:               'naam'
+        contact:            'verantwoordelijke'
+        upload_directory:   'folder'
+      user:
+        name:               'naam'
+        organization_id:    'organizatie'
+        admin:              'beheerder'
+        upload_dir:         'folder'
+        password_digest:    'wachtwoord'
+        email:              'e-mail adres'
+        password:           'wachtwoord'
+        confirmation:     'bevestiging'
+
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              confirmation: 'en bevestiging zijn niet gelijk'
+
+      messages:
+        inclusion: "is niet geldig"
+        blank:     "mag niet blanco zijn"
+        taken:      'is reeds in gebruik'
+
+  errors:
+    template:
+      body:        "Volgende velden hebben problemen:"
+      header:
+        one:       "1 fout belet het bewaren van %{model}"
+        other:     "%{count} fout beletten het bewaren van %{model}"
+
+

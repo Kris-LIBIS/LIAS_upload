@@ -1,0 +1,75 @@
+<h1>List of users<%= " for #{@organization.name}" if @organization %></h1>
+
+<% if @organization %>
+  <%= javascript_tag "$(document).ready(function () {$('#admin_user_table').tablesorter({ headers: { 6: { sorter: false } }, sortList: [[0,0], [1,0]] });});" %>
+<% else %>
+  <%= javascript_tag "$(document).ready(function () {$('#admin_user_table').tablesorter({ headers: { 5: { sorter: false } }, sortList: [[0,0] });});" %>
+<% end %>
+
+
+<%= form_tag admin_users_path, :method => 'get', :class => 'org_filter' do %>
+  Filter:
+  <%= select_tag :organization_id,
+                 options_from_collection_for_select(
+                     Organization.all(order: "name ASC"),
+                     :id, :name, @organization ? @organization.id : 0),
+                 prompt: '-- all organizations --',
+                 onchange: 'this.form.submit()' %>
+  <%= submit_tag 'apply' %>
+
+  <%= javascript_tag "$('.org_filter input').hide()" %>
+
+  <% if @organization %>
+    <%= link_icon_to :view, @organization.name, admin_organization_path(@organization) %>
+  <% end %>
+
+<% end %>
+
+<table class="tablesorter" id="admin_user_table">
+  <thead>
+  <tr>
+    <% unless @organization %>
+      <th>Organization</th>
+    <% end %>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Upload dir</th>
+    <th>Administrator</th>
+    <th>Uploads</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <% unless @organization %>
+        <% if user.organization %>
+          <td><%= user.organization.name %></td>
+        <% else %>
+          <td> --- orphan ---</td>
+        <% end %>
+      <% end %>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.upload_dir %></td>
+      <td><%= user.admin? %></td>
+      <td>
+        <%= user.uploads.count %>
+        <%= link_icon_to :view, 'Uploads', admin_user_uploads_path(user) %>
+      </td>
+      <td>
+        <%= link_icon_to :view, 'Show', admin_user_path(user) %>
+        <%= link_icon_to :edit, 'Edit', edit_admin_user_path(user) %>
+        <%= link_icon_to :delete, 'Destroy', admin_user_path(user), {}, confirm: 'Are you sure?', method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% if @organization %>
+  <%= link_icon_to :add, 'New User', new_admin_user_path(organization_id: @organization.id) %>
+<% else %>
+  <%= link_icon_to :add, 'New User', new_admin_user_path %>
+<% end %>

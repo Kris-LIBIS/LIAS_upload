@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  email: MyString
+  upload_dir: MyString
+  organization: one
+  admin: false
+  password_digest: abcdef
+
+two:
+  name: MyString
+  email: MyString
+  upload_dir: MyString
+  organization: two
+  admin: false
+  password_digest: 123456
+
+libis_admin:
+  name: libis_admin
+  email: info@libis.be
+  upload_dir: admin
+  organization: libis
+  admin: true
+  password_digest: <%= BCrypt::Password.create('SeCrEt') %>

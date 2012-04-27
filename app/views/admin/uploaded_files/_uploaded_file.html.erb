@@ -1,0 +1,13 @@
+<tr>
+  <% if @upload.nil? %>
+    <td><%= uploaded_file.upload.name %></td>
+  <% end %>
+  <td><%= "#{[uploaded_file.relative_path, uploaded_file.file_name].reject {|i| i.nil? or i.empty?}.join('/')}" %></td>
+  <td><%= uploaded_file.mimetype %></td>
+  <% unless @upload.nil? %>
+    <td>
+      <%= link_icon_to :view, 'Show', admin_uploaded_file_path(uploaded_file) %>
+      <%= link_icon_to :delete, 'Destroy', admin_uploaded_file_path(uploaded_file), confirm: 'Are you sure?', method: :delete %>
+    </td>
+  <% end %>
+</tr>

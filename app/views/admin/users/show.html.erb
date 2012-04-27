@@ -1,0 +1,38 @@
+<h1>User</h1>
+
+<p>
+  <b>Name: </b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Email: </b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Upload dir: </b>
+  <%= @user.upload_dir %>
+</p>
+
+<p>
+  <b>Organization: </b>
+  <% if @user.organization %>
+    <%= @user.organization.name %>
+  <% else %>
+    <%= ' --- orphan --- ' %>
+  <% end %>
+
+</p>
+
+<p>
+  <b>Administrator: </b>
+  <%= @user.admin? ? 'yes' : 'no' %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_user_path(@user) %> |
+<%= link_to 'Uploads', admin_uploads_path(user_id: @user.id) %>
+<% if @user.organization %>
+  | <%= link_to 'Organization', admin_organization_path(@user.organization) %>
+<% end %>

@@ -1,12 +1,12 @@
-require 'pathname'
 require 'fileutils'
-require 'digest/md5'
 
 class UploadsController < ApplicationController
+  skip_filter :authorize
+
   # GET /uploads
   # GET /uploads.json
   def index
-    @uploads = Upload.all
+    @uploads = current_user.uploads.all(order: 'date DESC')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,7 +28,7 @@ class UploadsController < ApplicationController
   # GET /uploads/new
   # GET /uploads/new.json
   def new
-    @upload = Upload.new
+    @upload = Upload.new(user_id: session[:user_id], date: Time.now, status: 1)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,10 +45,13 @@ class UploadsController < ApplicationController
   # POST /uploads.json
   def create
     @upload = Upload.new(params[:upload])
+    @upload.user = current_user
+    @upload.date = Time.now
+    @upload.status = 1
 
     respond_to do |format|
       if @upload.save
-        format.html { redirect_to @upload, notice: 'Upload was successfully created.' }
+        format.html { redirect_to upload_path(@upload), notice: 'Upload was successfully created.' }
         format.json { render json: @upload, status: :created, location: @upload }
       else
         format.html { render action: "new" }
@@ -60,15 +63,15 @@ class UploadsController < ApplicationController
   # PUT /uploads/1
   # PUT /uploads/1.json
   def update
-    @upload = Upload.find(params[:id])
+    upload = Upload.find(params[:id])
 
     respond_to do |format|
-      if @upload.update_attributes(params[:upload])
-        format.html { redirect_to @upload, notice: 'Upload was successfully updated.' }
+      if upload.update_attributes(params[:upload])
+        format.html { redirect_to upload_path(upload), notice: 'Upload was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @upload.errors, status: :unprocessable_entity }
+        format.json { render json: upload.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,12 +79,22 @@ class UploadsController < ApplicationController
   # DELETE /uploads/1
   # DELETE /uploads/1.json
   def destroy
-    @upload = Upload.find(params[:id])
-    @upload.destroy
-    1
+    upload = Upload.find(params[:id])
+    upload.destroy
+
     respond_to do |format|
       format.html { redirect_to uploads_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /uploads/1/add_files
+  def add_files
+    @upload = Upload.find(params[:id])
+
+    respond_to do |format|
+      format.html # add_files.html.erb
+      format.json { render json: @upload }
     end
   end
 
@@ -91,8 +104,12 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       if (file_data = params[:File0])
-        base_dir = Pathname.new upload_dir(@upload)
+        base_dir = upload_dir(@upload)
         relative_path = params[:relpathinfo0]
+        if request.env['HTTP_USER_AGENT'] =~ /^[^(]*[^)]*Windows[ ;)]/
+          relative_path.gsub!(/\\/,'/')
+        end
+
         target_dir = base_dir + relative_path
 
         file_name = file_data.original_filename
@@ -103,7 +120,7 @@ class UploadsController < ApplicationController
         end
 
         # create target folder
-        FileUtils.mkdir_p target_path.dirname, mode: 0777
+        FileUtils.mkdir_p target_dir, mode: 0777
 
         # copy the file from temp location to final target
         File.open(target_path, 'wb') { |f| f.write(file_data.read) }
@@ -140,9 +157,7 @@ class UploadsController < ApplicationController
   private
 
   def upload_dir(upload)
-    dir = Pathname.new(super())
-    dir = dir.join(upload.id.to_s)
-    dir.to_s
+    upload.full_path
   end
 
 end

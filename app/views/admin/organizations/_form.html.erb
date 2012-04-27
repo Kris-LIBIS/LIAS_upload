@@ -1,0 +1,56 @@
+<div class="organization_form">
+  <% if @organization.id %>
+
+    <% options = {url: admin_organization_path(@organization), method: :put} %>
+  <% else %>
+    <% options = {url: admin_organizations_path, method: :post} %>
+  <% end %>
+
+  <% if @organization.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= raw t('errors.template.header', count: @organization.errors.count,
+                    model: t('activerecord.models.organization')) %>.</h2>
+
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+        <% @organization.errors.full_messages.each do |msg| %>
+          <li><%= raw msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_for(@organization, options) do |f| %>
+
+    <fieldset>
+
+      <legend>Enter organization details</legend>
+
+      <div class="field">
+        <%= f.label :name %>
+        <br/>
+        <%= f.text_field :name %>
+      </div>
+
+      <div class="field">
+        <%= f.label :upload_directory %>
+        <br/>
+        <%= f.text_field :upload_directory %>
+      </div>
+
+      <div class="field">
+        <%= f.label :contact %>
+        <br/>
+        <%= f.email_field :contact %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+
+    </fieldset>
+
+  <% end %>
+
+</div>

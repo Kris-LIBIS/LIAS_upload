@@ -1,33 +1,39 @@
-<h1>Listing uploads</h1>
+<h1>List of uploads<%= " for #{@user.name}" if @user %></h1>
 
-<table>
+<%= javascript_tag "$(document).ready(function () {$('#uploads_table').tablesorter({ headers: { 5: { sorter: false } }, sortList: [[0,1]] });});" %>
+
+<table class="tablesorter" id="uploads_table">
+  <thead>
   <tr>
-<!--    <th>User</th> -->
-    <th>Name</th>
     <th>Date</th>
+    <th>Directory</th>
+    <th>Files</th>
     <th>Status</th>
     <th>Info</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th colspan="3"></th>
+    <th>Actions</th>
   </tr>
+  </thead>
 
-<% @uploads.each do |upload| %>
-  <tr>
-<!--    <td><%= upload.user_id %></td> -->
-    <td><%= upload.name %></td>
-    <td><%= upload.date %></td>
-    <td><%= upload.status %></td>
-    <td><%= upload.info %></td>
+  <tbody>
+  <% @uploads.each do |upload| %>
+    <tr>
+      <td><%= upload.date %></td>
+      <td><%= upload.name %></td>
+      <td><%= upload.uploaded_files.count %></td>
+      <td><%= upload.status %></td>
+      <td><%= upload.info %></td>
 
-    <td><%= link_icon_to :view, 'Show upload', upload, icon_size: :tiny %></td>
-    <td><%= link_icon_to :edit, 'Edit upload', edit_upload_path(upload), icon_size: :tiny  %></td>
-    <td><%= link_icon_to :delete, 'Delete upload', upload, { icon_size: :tiny }, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+      <td>
+        <%= link_icon_to :view, 'Show upload', upload_path(upload) %>
+        <%= link_icon_to :edit, 'Edit upload', edit_upload_path(upload) %>
+        <%= link_icon_to :delete, 'Delete upload', upload_path(upload), {}, confirm: 'Are you sure?', method: :delete %>
+      </td>
+
+    </tr>
+  <% end %>
+  </tbody>
 </table>
 
-<br />
+<br/>
 
-<%= link_icon_to :add, 'Add new upload', new_upload_path, icon_size: :normal %>
+<%= link_icon_to :add, 'New upload', new_upload_path %>
