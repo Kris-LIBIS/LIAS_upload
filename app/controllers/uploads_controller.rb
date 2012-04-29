@@ -6,7 +6,8 @@ class UploadsController < ApplicationController
   # GET /uploads
   # GET /uploads.json
   def index
-    @uploads = current_user.uploads.all(order: 'date DESC')
+    @user = current_user
+    @uploads = current_user.uploads
 
     respond_to do |format|
       format.html # index.html.erb

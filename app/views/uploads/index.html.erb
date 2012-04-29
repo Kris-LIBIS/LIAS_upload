@@ -1,7 +1,5 @@
 <h1>List of uploads<%= " for #{@user.name}" if @user %></h1>
 
-<%= javascript_tag "$(document).ready(function () {$('#uploads_table').tablesorter({ headers: { 5: { sorter: false } }, sortList: [[0,1]] });});" %>
-
 <table class="tablesorter" id="uploads_table">
   <thead>
   <tr>
@@ -32,8 +30,15 @@
     </tr>
   <% end %>
   </tbody>
+
+  <tfoot>
+  <tr>
+    <td colspan="20">
+      <%= link_icon_to :add, 'New upload', new_upload_path %>
+      <%= paging_tags('uploads_table', 0 => :rsort, 5 => :nosort) %>
+    </td>
+  </tr>
+  </tfoot>
+
 </table>
 
-<br/>
-
-<%= link_icon_to :add, 'New upload', new_upload_path %>

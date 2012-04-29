@@ -3,7 +3,7 @@ nl:
 # menu
   menu:
     administration:      'Systeem beheer'
-    organizations:       'Organizaties'
+    organizations:       'Organisaties'
     users:               'Gebruikers'
     uploads:             'Oplaadsessies'
     uploaded_files:      'Opgeladen bestanden'
@@ -26,7 +26,7 @@ nl:
 
   activerecord:
     models:
-      organization:   'organizatie'
+      organization:   'organisatie'
       user:           'gebruiker'
       upload:         'oplaadsessie'
       uploaded_file:  'bestand'
@@ -37,7 +37,7 @@ nl:
         upload_directory:   'folder'
       user:
         name:               'naam'
-        organization_id:    'organizatie'
+        organization_id:    'organisatie'
         admin:              'beheerder'
         upload_dir:         'folder'
         password_digest:    'wachtwoord'
@@ -64,4 +64,10 @@ nl:
         one:       "1 fout belet het bewaren van %{model}"
         other:     "%{count} fout beletten het bewaren van %{model}"
 
-
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "&hellip;"

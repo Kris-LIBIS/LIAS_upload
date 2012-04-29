@@ -1,11 +1,5 @@
 <h1>List of uploads<%= " for #{@user.name}" if @user %></h1>
 
-<% if @user%>
-  <%= javascript_tag "$(document).ready(function () {$('#admin_uploads_table').tablesorter({ headers: { 5: { sorter: false } }, sortList: [[0,0] });});" %>
-<% else %>
-  <%= javascript_tag "$(document).ready(function () {$('#admin_uploads_table').tablesorter({ headers: { 6: { sorter: false } }, sortList: [[0,0], [1,0]] });});" %>
-<% end %>
-
 <%= form_tag admin_uploads_path, :method => 'get', :class => 'user_filter' do %>
   Filter:
   <%= select_tag :user_id,
@@ -13,11 +7,9 @@
                  onchange: 'this.form.submit()' %>
   <%= submit_tag 'apply' %>
   <%= javascript_tag "$('.user_filter input').hide()" %>
-
   <% if @user %>
     <%= link_icon_to :view, 'Show', admin_user_path(@user) %>
   <% end %>
-
 <% end %>
 
 <table class="tablesorter" id="admin_uploads_table">
@@ -39,7 +31,10 @@
     <tr>
       <% unless @user %>
         <% if upload.user %>
-          <td><%= upload.user.name %>
+          <td>
+            <%= upload.user.name %>
+            <%= link_icon_to :view, 'Show', admin_user_path(upload.user) %>
+          </td>
         <% else %>
           <td> ------ </td>
         <% end %>
@@ -58,14 +53,19 @@
     </tr>
   <% end %>
   </tbody>
+
+  <tfoot>
+  <tr>
+    <td colspan="20">
+
+      <% if @user%>
+        <%= paging_tags('admin_uploads_table', 0 => :rsort, 4 => :nosort) %>
+      <% else %>
+        <%= paging_tags('admin_uploads_table', 0 => :sort, 1 => :rsort, 5 => :nosort) %>
+      <% end %>
+
+    </td>
+  </tr>
+  </tfoot>
+
 </table>
-
-<br/>
-
-<!--
-<% if @user %>
-  <%= link_icon_to :add, 'New upload', new_admin_upload_path(user_id: @user.id), icon_size: :normal %>
-<% else %>
-  <%= link_icon_to :add, 'New upload', new_admin_upload_path, icon_size: :normal %>
-<% end %>
--->

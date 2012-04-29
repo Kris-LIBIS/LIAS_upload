@@ -4,7 +4,7 @@ class Admin::OrganizationsController < ApplicationController
   # GET /admin/organizations
   # GET /admin/organizations.json
   def index
-    @organizations = Organization.all(order: 'name ASC')
+    @organizations = Organization.all
 
     respond_to do |format|
       format.html # index.html.erb

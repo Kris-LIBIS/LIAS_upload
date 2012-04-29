@@ -10,9 +10,9 @@ class Admin::UploadsController < ApplicationController
   def index
     begin
       @user = User.find(params[:user_id])
-      @uploads = @user.uploads.all(order: 'date DESC')
+      @uploads = @user.uploads
     rescue
-      @uploads = Upload.all(order: 'date DESC')
+      @uploads = Upload.all
     end
 
     respond_to do |format|

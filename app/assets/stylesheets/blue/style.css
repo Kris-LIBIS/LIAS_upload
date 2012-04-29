@@ -37,3 +37,20 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
+
+form input.pagedisplay {
+    color: #0033cc;
+    background-color: #CDCDCD;
+    width: 5em;;
+    text-align: center;
+    font-style: italic;
+}
+
+form input.pagesize {
+    width: 3em;
+    text-align: center;
+}
+
+div.pager {
+    float: right;
+}

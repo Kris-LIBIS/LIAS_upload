@@ -14,7 +14,7 @@ group :development, :test do
     gem 'jdbc-sqlite3', :require => false
   end
   platforms :ruby do
-    gem 'sqlite3-ruby', :require => 'sqlite3'
+    gem 'sqlite3', :require => 'sqlite3'
   end
 end
 
@@ -25,7 +25,7 @@ group :production do
 #    gem 'jdbc-mysql'
   end
   platforms :ruby do
-    gem 'sqlite3-ruby', :require => 'sqlite3'
+    gem 'sqlite3', :require => 'sqlite3'
 #    gem 'mysql2'
   end
 end
@@ -73,4 +73,4 @@ platforms :ruby do
   gem 'thin'
 end
 
-gem  'will_paginate', '~> 3.0'
+# gem  'will_paginate', '~> 3.0'

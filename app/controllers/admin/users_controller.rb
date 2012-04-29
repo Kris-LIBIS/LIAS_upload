@@ -6,9 +6,9 @@ class Admin::UsersController < ApplicationController
   def index
     begin
       @organization = Organization.find(params[:organization_id])
-      @users = @organization.users.all(order: 'name ASC')
+      @users = @organization.users
     rescue
-      @users = User.all(include: :organization, order: 'organizations.name ASC, users.name ASC')
+      @users = User.all
     end
 
     respond_to do |format|

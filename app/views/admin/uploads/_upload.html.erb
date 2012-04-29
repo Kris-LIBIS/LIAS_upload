@@ -21,50 +21,10 @@
   | <%= link_to 'User', admin_user_path(upload.user) %>
 <% end %>
 
-<%= javascript_tag "$(document).ready(function () {$('#admin_files_table').tablesorter({ headers: { 2: { sorter: false } }, sortList: [[0,0] });});" %>
-
-<!--
-<script type="text/javascript">
-  //<![CDATA[
-  $(document).ready(function () {
-    $('#admin_files_table')
-        .tablesorter(
-        { widthFixed:true, widgets:['zebra'],
-          headers:{ 2:{ sorter:false } },
-          sortList:[
-            [0, 0]
-          ]})
-        .tablesorterPager({container:$('#pager')});
-  });
-
-  //]]>
-</script>
--->
 
 <div class="upload_files">
 
   <h3>Uploaded files:</h3>
-
-  <!--
-  <div id="pager" class="pager">
-
-    <form>
-      <img src="../addons/pager/icons/first.png" class="first"/>
-      <img src="../addons/pager/icons/prev.png" class="prev"/>
-      <input type="text" class="pagedisplay"/>
-      <img src="../addons/pager/icons/next.png" class="next"/>
-      <img src="../addons/pager/icons/last.png" class="last"/>
-      <select class="pagesize">
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="10" selected="selected">10</option>
-      </select>
-    </form>
-
-  </div>
-  -->
 
   <table class="tablesorter" id="admin_files_table">
     <thead>
@@ -78,6 +38,16 @@
     </thead>
 
     <tbody><%= render(upload.uploaded_files) %></tbody>
+
+    <tfoot>
+    <tr>
+      <td colspan="20">
+
+        <%= paging_tags('admin_files_table', 0 => :sort, 2 => :nosort) %>
+
+      </td>
+    </tr>
+    </tfoot>
 
   </table>
 

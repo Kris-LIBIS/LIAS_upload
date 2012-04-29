@@ -1,8 +1,6 @@
 <h1>List of organizations</h1>
 
-<%= javascript_tag "$(document).ready(function () {$('table').tablesorter({ headers: { 4: { sorter: false } }, sortList: [[0,0]] });});" %>
-
-<table class="tablesorter">
+<table class="tablesorter" id="admin_organization_table">
   <thead >
   <tr>
     <th>Name</th>
@@ -22,7 +20,7 @@
       <td><%= organization.contact %></td>
       <td>
         <%= organization.users.count %>
-        <%= link_icon_to :view, 'Users', admin_organization_users_path(organization) %>
+        <%= link_icon_to :view, 'Users', admin_users_path(organization_id: organization.id) %>
       </td>
       <td>
         <%= link_icon_to :view, 'Show', admin_organization_path(organization) %>
@@ -33,11 +31,18 @@
     </tr>
   <% end %>
 
+  <tfoot>
+  <tr>
+    <td colspan="20">
+
+      <%= link_icon_to :add, 'New Organization', new_admin_organization_path %>
+
+      <%= paging_tags('admin_organization_table', 0 => :sort, 4 => :nosort) %>
+
+    </td>
+  </tr>
+  </tfoot>
+
   </tbody>
 
 </table>
-
-<br/>
-
-<%= link_icon_to :add, 'New Organization', new_admin_organization_path %>
-

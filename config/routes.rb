@@ -20,9 +20,6 @@ LIASUpload::Application.routes.draw do
       resources :uploads
       resources :uploaded_files
 
-      match 'organizations/:organization_id/users' => 'users#index', as: :organization_users
-      match 'users/:user_id/uploads' => 'uploads#index', as: :user_uploads
-
     end
 
     resources :uploads do

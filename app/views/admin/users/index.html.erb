@@ -1,12 +1,5 @@
 <h1>List of users<%= " for #{@organization.name}" if @organization %></h1>
 
-<% if @organization %>
-  <%= javascript_tag "$(document).ready(function () {$('#admin_user_table').tablesorter({ headers: { 6: { sorter: false } }, sortList: [[0,0], [1,0]] });});" %>
-<% else %>
-  <%= javascript_tag "$(document).ready(function () {$('#admin_user_table').tablesorter({ headers: { 5: { sorter: false } }, sortList: [[0,0] });});" %>
-<% end %>
-
-
 <%= form_tag admin_users_path, :method => 'get', :class => 'org_filter' do %>
   Filter:
   <%= select_tag :organization_id,
@@ -16,13 +9,10 @@
                  prompt: '-- all organizations --',
                  onchange: 'this.form.submit()' %>
   <%= submit_tag 'apply' %>
-
   <%= javascript_tag "$('.org_filter input').hide()" %>
-
   <% if @organization %>
     <%= link_icon_to :view, @organization.name, admin_organization_path(@organization) %>
   <% end %>
-
 <% end %>
 
 <table class="tablesorter" id="admin_user_table">
@@ -45,7 +35,10 @@
     <tr>
       <% unless @organization %>
         <% if user.organization %>
-          <td><%= user.organization.name %></td>
+          <td>
+            <%= user.organization.name %>
+            <%= link_icon_to :view, 'Show', admin_organization_path(user.organization) %>
+          </td>
         <% else %>
           <td> --- orphan ---</td>
         <% end %>
@@ -56,7 +49,7 @@
       <td><%= user.admin? %></td>
       <td>
         <%= user.uploads.count %>
-        <%= link_icon_to :view, 'Uploads', admin_user_uploads_path(user) %>
+        <%= link_icon_to :view, 'Uploads', admin_uploads_path(user_id: user.id) %>
       </td>
       <td>
         <%= link_icon_to :view, 'Show', admin_user_path(user) %>
@@ -66,10 +59,22 @@
     </tr>
   <% end %>
   </tbody>
+
+  <tfoot>
+  <tr>
+    <td colspan="20">
+
+      <% if @organization %>
+        <%= link_icon_to :add, 'New User', new_admin_user_path(organization_id: @organization.id) %>
+        <%= paging_tags('admin_user_table', 0 => :sort, 5 => :nosort) %>
+      <% else %>
+        <%= link_icon_to :add, 'New User', new_admin_user_path %>
+        <%= paging_tags('admin_user_table', 0 => :sort, 1 => :sort, 6 => :nosort) %>
+      <% end %>
+
+    </td>
+  </tr>
+  </tfoot>
+
 </table>
 
-<% if @organization %>
-  <%= link_icon_to :add, 'New User', new_admin_user_path(organization_id: @organization.id) %>
-<% else %>
-  <%= link_icon_to :add, 'New User', new_admin_user_path %>
-<% end %>
