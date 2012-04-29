@@ -4,8 +4,8 @@ class Organization < ActiveRecord::Base
   #noinspection RailsParamDefResolve
   attr_accessible :contact, :name, :upload_directory
 
-  validates :name, presence: true, uniqueness: true
-  validates :upload_directory, presence: true, uniqueness: true
+  validates_presence_of :name, :contact, :upload_directory
+  validates_uniqueness_of :name, :upload_directory
 
   has_many :users, dependent: :destroy
   before_destroy :delete_upload_dir
