@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   def delete_upload_dir
-    FileUtils.rm_r full_path
+    FileUtils.rm_rf full_path
   end
 
 end
