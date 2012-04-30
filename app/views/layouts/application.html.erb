@@ -4,11 +4,20 @@
   <title>LIASUpload</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "jquery.tablesorter.min" %>
-  <%= javascript_include_tag "jquery.metadata" %>
-  <%= javascript_include_tag "jquery.tablesorter.pager" %>
   <%= stylesheet_link_tag "blue/style.css" %>
   <%= csrf_meta_tags %>
+  <%= javascript_tag do -%>
+
+    $(document).ready(function () {
+      $("#alert")
+        .delay(500)
+        .effect("pulsate", {times: 2, mode: "show", duration: 1000});
+      $("#notice")
+        .delay(3000)
+        .fadeOut(2000);
+    });
+
+  <% end %>
 </head>
 <body class="<%= controller.controller_name %>" >
 
@@ -40,11 +49,11 @@
   </div>
 
   <% if flash[:alert] %>
-    <p id="alert" onchange="Effect.pulsate('alert', {pulses: 5, duration: 3});return false;" onload="Effect.pulsate('alert', {pulses: 5, duration: 3});return false;"><%= flash[:alert] %></p>
+    <p id="alert"><%= flash[:alert] %></p>
   <% end %>
 
   <% if notice %>
-    <p id="notice" onchange="Effect.pulsate('notice', {pulses: 5, duration: 3});return false;" onload="Effect.pulsate('notice', {pulses: 5, duration: 3});return false;"><%= flash[:notice] %></p>
+    <p id="notice"><%= flash[:notice] %></p>
   <% end %>
 
 </div>
@@ -85,7 +94,7 @@
 </div>
 
   <footer>
-    <%=  session.inspect %>
+    <!--%=  session.inspect %-->
   </footer>
 </body>
 </html>
