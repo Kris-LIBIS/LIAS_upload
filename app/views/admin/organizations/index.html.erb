@@ -25,8 +25,8 @@
       <td>
         <%= link_icon_to :view, 'Show', admin_organization_path(organization) %>
         <%= link_icon_to :edit, 'Edit', edit_admin_organization_path(organization) %>
-        <%= link_icon_to :delete, 'Destroy', admin_organization_path(organization),
-                         confirm: "This will remove the organization and all its users.\nAre you sure?", method: :delete %>
+        <%= link_icon_to :delete, 'Destroy', admin_organization_path(organization), {},
+                         confirm: "This will remove the organization and all its users and all the uploaded data.\nAre you sure?", method: :delete %>
       </td>
     </tr>
   <% end %>

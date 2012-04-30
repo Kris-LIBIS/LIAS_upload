@@ -54,7 +54,8 @@
       <td>
         <%= link_icon_to :view, 'Show', admin_user_path(user) %>
         <%= link_icon_to :edit, 'Edit', edit_admin_user_path(user) %>
-        <%= link_icon_to :delete, 'Destroy', admin_user_path(user), {}, confirm: 'Are you sure?', method: :delete %>
+        <%= link_icon_to :delete, 'Destroy', admin_user_path(user), {},
+                         confirm: "This will remove the user and its uploaded data.\nAre you sure?", method: :delete %>
       </td>
     </tr>
   <% end %>

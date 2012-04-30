@@ -48,7 +48,8 @@
       <td>
         <%= link_icon_to :view, 'Show upload', admin_upload_path(upload) %>
         <%= link_icon_to :edit, 'Edit upload', edit_admin_upload_path(upload) %>
-        <%= link_icon_to :delete, 'Delete upload', admin_upload_path(upload), {}, confirm: 'Are you sure?', method: :delete %>
+        <%= link_icon_to :delete, 'Delete upload', admin_upload_path(upload), {},
+                         confirm: "This will remove the opload session and its uploaded data.\nAre you sure?", method: :delete %>
       </td>
     </tr>
   <% end %>

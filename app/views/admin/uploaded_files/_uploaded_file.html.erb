@@ -7,7 +7,8 @@
   <% unless @upload.nil? %>
     <td>
       <%= link_icon_to :view, 'Show', admin_uploaded_file_path(uploaded_file) %>
-      <%= link_icon_to :delete, 'Destroy', admin_uploaded_file_path(uploaded_file), confirm: 'Are you sure?', method: :delete %>
+      <%= link_icon_to :delete, 'Destroy', admin_uploaded_file_path(uploaded_file), {},
+                       confirm: "This will remove the file on the server.\nAre you sure?", method: :delete %>
     </td>
   <% end %>
 </tr>
