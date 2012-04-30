@@ -1,17 +1,22 @@
 class ApplicationController < ActionController::Base
   before_filter :set_i18n_locale_from_params
   before_filter :authorize
+  after_filter :update_session
   protect_from_forgery
   helper :tags
 
   UPLOAD_DIR = '/nas/vol04/upload/flandrica'
+  INACTIVITY_TIMEOUT = 30; # in minutes
 
   protected
 
   def authorize
     if request.format == Mime::HTML or request.format == '*/*'
+      if session[:expire] and session[:expire] < Time.now
+        redirect_to login_path, notice: "You were logged out due to inactivity. Please log in again.", user_id: session[:user_id]
+      end
       unless User.find_by_id(session[:user_id])
-        redirect_to login_url, notice: "Please log in"
+        redirect_to login_path, notice: "Please log in", user_id: session[:user_id]
       end
     else
       authenticate_or_request_with_http_basic do |username, password|
@@ -29,6 +34,10 @@ class ApplicationController < ActionController::Base
     else
       false
     end
+  end
+
+  def update_session
+    session[:expire] = Time.now + INACTIVITY_TIMEOUT * 60;
   end
 
   private

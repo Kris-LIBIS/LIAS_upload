@@ -4,6 +4,11 @@ class Admin::SessionController < ApplicationController
 
   # GET /login
   def new
+    begin
+       user = User.find(params[:user_id]) if params[:user_id]
+      param[:name] = user.name
+    rescue
+    end
   end
 
   # POST /login
