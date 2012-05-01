@@ -36,6 +36,12 @@ set :use_sudo, false
 #   end
 # end
 namespace :deploy do
+
+  task :install_secure_files do
+    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{shared_path}/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
+  end
+
   task :restart do
     run "touch #{current_path}/tmp/restart.txt"
   end
@@ -53,7 +59,7 @@ namespace :deploy do
   end
 end
 
-after "deploy:update_code", :bundle_install
+after "deploy:update_code", :bundle_install, "deploy:install_secure_files"
 desc "install the necessary prerequisites"
 task :bundle_install, :roles => :app do
   run "cd #{release_path} && bundle install"

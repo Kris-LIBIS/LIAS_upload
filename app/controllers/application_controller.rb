@@ -5,9 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :tags
 
-  UPLOAD_DIR = '/nas/vol04/upload/flandrica'
-  INACTIVITY_TIMEOUT = 30; # in minutes
-
   protected
 
   def authorize
@@ -29,7 +26,9 @@ class ApplicationController < ActionController::Base
   def administrator
     if request.format == Mime::HTML
       unless (user = User.find_by_id(session[:user_id])) && user.admin?
-        redirect_to(root_path, altert: 'Access only allowed for administrators') and return
+        # TODO: Flash does not show. Why?
+        flash[:alert] = 'Access only allowed for administrators.'
+        redirect_to(front_end_path) and return false
       end
     else
       false
@@ -37,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def update_session
-    session[:expire] = Time.now + INACTIVITY_TIMEOUT * 60;
+    session[:expire] = Time.now + APP_CONFIG['inactivity_timeout'] * 60;
   end
 
   private

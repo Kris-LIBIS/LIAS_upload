@@ -134,7 +134,7 @@ class UploadsController < ApplicationController
         file_data.tempfile.rewind
 
         # Check expected file size
-        unless final_chunk || chunk_size == @upload.chunck_size
+        unless final_chunk || chunk_size == APP_CONFIG['chunck_size']
           render(text: "ERROR: upload stream corrupted during transfer; please try again.") and return
         end
 

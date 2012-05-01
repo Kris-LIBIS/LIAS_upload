@@ -17,8 +17,8 @@
     <param name="scriptable" value="true" />
     <param name="serverProtocol" value="HTTP/1.1" />
     <param name="postURL" value="/uploads/<%= @upload.id %>/upload" />
-    <param name="maxChunkSize" value="<%= @upload.chunck_size %>" />
-    <param name="nbFilesPerRequest" value="<%= @upload.files_per_request %>" />
+    <param name="maxChunkSize" value="<%= APP_CONFIG['chunck_size'] %>" />
+    <param name="nbFilesPerRequest" value="<%= APP_CONFIG['files_per_request'] %>" />
     <param name="sendMD5Sum" value="true" />
     <param name="afterUploadURL" value="/uploads/<%= @upload.id %>" />
     <param name="formData" value="post_info" />

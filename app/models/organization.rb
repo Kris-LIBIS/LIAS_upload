@@ -11,7 +11,7 @@ class Organization < ActiveRecord::Base
   before_destroy :delete_upload_dir
 
   def full_path
-    Pathname.new(ApplicationController::UPLOAD_DIR) + self.upload_directory
+    Pathname.new(APP_CONFIG['upload_dir']) + self.upload_directory
   end
 
   private
