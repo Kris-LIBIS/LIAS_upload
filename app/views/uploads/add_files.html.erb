@@ -10,19 +10,20 @@
     <param name="CODE" value="wjhk.jupload2.JUploadApplet" />
     <param name="ARCHIVE" value="/applets/jupload.jar" />
     <param name="lang" value="<%= session[:locale] %>" />
-    <param name="lookAndFeel" value="com.nilo.plaf.nimrod.NimRODLookAndFeel" />
+    <!--param name="lookAndFeel" value="com.nilo.plaf.nimrod.NimRODLookAndFeel" /-->
+    <param name="lookAndFeel" value="system" />
     <param name="type" value="application/x-java-applet;version=1.5" />
     <param name="mayscript" value="true" />
     <param name="scriptable" value="true" />
     <param name="serverProtocol" value="HTTP/1.1" />
     <param name="postURL" value="/uploads/<%= @upload.id %>/upload" />
-    <param name="maxChunkSize" value="0" />
-    <param name="nbFilesPerRequest" value="1" />
+    <param name="maxChunkSize" value="<%= @upload.chunck_size %>" />
+    <param name="nbFilesPerRequest" value="<%= @upload.files_per_request %>" />
     <param name="sendMD5Sum" value="true" />
-    <param name="lookAndFeel" value="system" />
     <param name="afterUploadURL" value="/uploads/<%= @upload.id %>" />
     <param name="formData" value="post_info" />
     <param name="showLogWindow" value="onError" />
+    <param name="debugLevel" value="0">
 
     Java 1.5 or higher plugin required.
   </applet>

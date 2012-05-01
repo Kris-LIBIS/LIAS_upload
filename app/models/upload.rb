@@ -12,6 +12,14 @@ class Upload < ActiveRecord::Base
 
   before_destroy :delete_upload_dir
 
+  def chunck_size
+    1000000
+  end
+
+  def files_per_request
+    1
+  end
+
   def full_path
     self.user.full_path + self.name
   end

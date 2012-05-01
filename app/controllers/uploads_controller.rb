@@ -1,7 +1,8 @@
 require 'fileutils'
 
 class UploadsController < ApplicationController
-  skip_filter :authorize
+  # workaround for bug in JUpload which fails to return the cookie properly
+  before_filter :authorize, except: :upload
 
   # GET /uploads
   # GET /uploads.json
@@ -117,39 +118,59 @@ class UploadsController < ApplicationController
         target_path = target_dir + file_name
 
         if target_path.relative_path_from(base_dir).to_s =~ /^\.\./
-          return render text: 'ERROR : illegal relative path'
+          render(text: 'ERROR : illegal relative path') and return
         end
 
         # create target folder
         FileUtils.mkdir_p target_dir, mode: 0777
 
+        partnr = params[:jupart].to_i || 0
+        final_chunk = !(params[:jufinal] == "0")
+
+        FileUtils.rm_f(target_path) unless partnr > 1
+
+        file_data.tempfile.seek 0, IO::SEEK_END
+        chunk_size = file_data.tempfile.pos
+        file_data.tempfile.rewind
+
+        # Check expected file size
+        unless final_chunk || chunk_size == @upload.chunck_size
+          render(text: "ERROR: upload stream corrupted during transfer; please try again.") and return
+        end
+
         # copy the file from temp location to final target
-        File.open(target_path, 'wb') { |f| f.write(file_data.read) }
+        File.open(target_path, 'ab') { |f| f.write(file_data.read) }
 
-        # check MD5 checksum
-        md5sum = params[:md5sum0]
-        digest = ::Digest::MD5.new()
-        File.open(target_path, 'rb') do |f|
-          while data = f.read(1000000)
-            digest << data
+        if final_chunk
+
+          # check MD5 checksum
+          md5sum = params[:md5sum0]
+
+          unless check_md5(target_path, md5sum)
+            render(text: "ERROR: md5sum check failed. Uploaded data seems to be corrupt; please try uploading the files again.") and return
           end
-        end
-        unless digest == md5sum
-          return render text: "ERROR: md5sum check failed. Uploaded data seems to be corrupt; please try uploading the files again."
-        end
 
-        # create file object in DB
-        UploadedFile.new(
-            upload_id: @upload.id,
-            file_name: file_name,
-            source_path: params[:pathinfo0],
-            relative_path: relative_path,
-            mimetype: file_data.content_type,
-            md5sum: md5sum,
-            # modification_date: params[:filemodificationdate0],
-            local_path: target_path.to_s
-        ).save
-        return render text: 'SUCCESS'
+          # create file object in DB
+          attributes = {
+              upload_id: @upload.id,
+              file_name: file_name,
+              source_path: params[:pathinfo0],
+              relative_path: relative_path,
+              mimetype: file_data.content_type,
+              md5sum: md5sum,
+              # modification_date: params[:filemodificationdate0],
+              local_path: target_path.to_s
+          }
+
+          begin
+            uploaded_file = UploadedFile.find_by_local_path(target_path.to_s)
+            uploaded_file.update_attributes(attributes)
+          rescue
+            UploadedFile.new(attributes).save
+          end
+
+        end
+        render(text: 'SUCCESS') and return
       end
       format.html
     end
@@ -159,6 +180,17 @@ class UploadsController < ApplicationController
 
   def upload_dir(upload)
     upload.full_path
+  end
+
+  def check_md5(file, checksum)
+    digest = ::Digest::MD5.new()
+    File.open(file, 'rb') do |f|
+      while (data = f.read(1000000))
+        digest << data
+      end
+    end
+    puts "digest: #{digest} -- checksum: #{checksum}"
+    digest == checksum
   end
 
 end
