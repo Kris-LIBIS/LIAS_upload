@@ -1,16 +1,16 @@
-:testing
+testing:
   inactivity_timeout:   5
   chunk_size:            1000
   files_per_request:    1
   upload_dir:            data
   
-:development
+development:
   inactivity_timeout:   60
   chunk_size:            1000000
   files_per_request:    1
   upload_dir:            data
 
-:production
+production:
   inactivity_timeout:   30
   chunk_size:            50000000
   files_per_request:    1
