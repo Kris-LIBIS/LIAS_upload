@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'pathname'
 
 class User < ActiveRecord::Base
   #noinspection RailsParamDefResolve
@@ -11,6 +12,7 @@ class User < ActiveRecord::Base
   validates :name, :email, :upload_dir, presence: true
   validates_uniqueness_of :name, scope: [:organization_id]
   validates_uniqueness_of :upload_dir, scope: [:organization_id]
+  validate :directory_valid
 
   after_destroy :ensure_an_admin_remains
   after_update :ensure_an_admin_remains
@@ -21,6 +23,12 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def directory_valid
+    self.upload_dir = Pathname.new(self.upload_dir).cleanpath.to_s
+    errors.add(:upload_dir, 'Illegal upload directory') if self.upload_dir =~ /^\.\.($|[^.]+)/
+    self.upload_dir.gsub!(/^\//,'')
+  end
 
   def ensure_an_admin_remains
     raise "Can't delete last admin" if User.find_all_by_admin(true).size < 1

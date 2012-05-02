@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'pathname'
 
 class Upload < ActiveRecord::Base
   #noinspection RailsParamDefResolve
@@ -6,6 +7,7 @@ class Upload < ActiveRecord::Base
 
   validates :name, :status, :user_id, presence: true
   validates_uniqueness_of :name, :scope => :user_id
+  validate :directory_valid
 
   belongs_to :user
   has_many :uploaded_files, :dependent => :destroy
@@ -17,6 +19,12 @@ class Upload < ActiveRecord::Base
   end
 
   private
+
+  def directory_valid
+    self.name = Pathname.new(self.name).cleanpath.to_s
+    errors.add(:name, 'Illegal upload directory') if self.name =~ /^\.\.($|[^.]+)/
+    self.name.gsub!(/^\//,'')
+  end
 
   def delete_upload_dir
     FileUtils.rm_rf full_path
