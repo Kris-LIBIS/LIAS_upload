@@ -2,15 +2,15 @@
 
 module TagsHelper
 
-  def link_icon_to(action, title, target, icon_options = {}, link_url_options = {}, link_html_options = {})
+  def link_icon_to(action, title, url, icon_options = {}, link_html_options = {})
     icon_options[:title] = title
-    link_to icon_tag(action, icon_options), target, link_url_options, link_html_options
+    link_to icon_tag(action, icon_options), url, link_html_options
   end
 
   def icon_tag(action, options = {})
     icon_size = ICON_SIZE[options.delete(:icon_size)] || ICON_SIZE[:tiny]
     icon_name = ACTION_TO_ICON[action.to_sym]
-    icon_path = "/assets/must_have_icon_set/#{icon_name}/#{icon_name}_#{icon_size}.png"
+    icon_path = "/assets/icon/#{icon_name}/#{icon_name}_#{icon_size}.png"
     options[:width], options[:height] = icon_size.split("x")
     options[:src] = icon_path
     tag('img', options)
@@ -75,7 +75,11 @@ module TagsHelper
       edit:     'Edit',
       view:     'Preview',
       delete:   'Delete',
-      back:     'Undo'
+      back:     'Undo',
+      next:     'Redo',
+      sync:     'Synchronize',
+      lock:     'Locked',
+      unlock:   'Unlocked'
   }
 
   ICON_SIZE = {

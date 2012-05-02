@@ -14,6 +14,8 @@ class Upload < ActiveRecord::Base
 
   before_destroy :delete_upload_dir
 
+  UPLOAD_STATUS = %w( Closed Uploading Uploaded Processing Ingested )
+
   def full_path
     self.user.full_path + self.name
   end

@@ -42,9 +42,15 @@ class Admin::UploadsController < ApplicationController
   def update
     @upload = Upload.find(params[:id])
 
+    target = admin_upload_path(@upload)
+    if params[:status]
+      params[:upload] = {status: params[:status]}
+      target = :back
+    end
+
     respond_to do |format|
       if @upload.update_attributes(params[:upload])
-        format.html { redirect_to admin_upload_path(@upload), notice: 'Upload was successfully updated.' }
+        format.html { redirect_to target, notice: 'Upload was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -36,20 +36,31 @@
             <%= link_icon_to :view, 'Show', admin_user_path(upload.user) %>
           </td>
         <% else %>
-          <td> ------ </td>
+          <td> ------</td>
         <% end %>
       <% end %>
 
       <td><%= upload.date %></td>
       <td><%= upload.name %></td>
       <td><%= upload.uploaded_files.count %></td>
-      <td><%= upload.status %></td>
+      <td>
+        <%= Upload::UPLOAD_STATUS[upload.status] %>
+      </td>
 
       <td>
         <%= link_icon_to :view, 'Show upload', admin_upload_path(upload) %>
         <%= link_icon_to :edit, 'Edit upload', edit_admin_upload_path(upload) %>
         <%= link_icon_to :delete, 'Delete upload', admin_upload_path(upload), {},
                          confirm: "This will remove the opload session and its uploaded data.\nAre you sure?", method: :delete %>
+        <% case upload.status %>
+        <% when 2 %>
+          <%= link_icon_to :lock, 'Lock into processing mode', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status + 1}, {}, method: :put %>
+        <% when 3 %>
+          <%= link_icon_to :unlock, 'Unlock to interrupt processing', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status - 1}, {}, method: :put %>
+          <%= link_icon_to :next, 'Mark as ingested', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status + 1}, {}, method: :put %>
+        <% when 4 %>
+          <%= link_icon_to :back, 'Set into processing mode', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status - 1}, {}, method: :put %>
+        <% end %>
       </td>
     </tr>
   <% end %>
@@ -59,7 +70,7 @@
   <tr>
     <td colspan="20">
 
-      <% if @user%>
+      <% if @user %>
         <%= paging_tags('admin_uploads_table', 0 => :rsort, 4 => :nosort) %>
       <% else %>
         <%= paging_tags('admin_uploads_table', 0 => :sort, 1 => :rsort, 5 => :nosort) %>

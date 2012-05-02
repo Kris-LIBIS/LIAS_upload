@@ -18,7 +18,7 @@
       <td><%= upload.date %></td>
       <td><%= upload.name %></td>
       <td><%= upload.uploaded_files.count %></td>
-      <td><%= upload.status %></td>
+      <td><%= Upload::UPLOAD_STATUS[upload.status] %></td>
       <td><%= upload.info %></td>
 
       <td>
@@ -26,6 +26,12 @@
         <%= link_icon_to :edit, 'Edit upload', edit_upload_path(upload) %>
         <%= link_icon_to :delete, 'Delete upload', upload_path(upload), {},
                          confirm: "This will remove the opload session and its uploaded data.\nAre you sure?", method: :delete %>
+        <% case upload.status %>
+          <% when 1 %>
+            <%= link_icon_to :unlock, 'Lock to process', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status + 1}, {}, method: :put %>
+          <% when 2 %>
+          <%= link_icon_to :lock, 'Unlock to add more files', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status - 1 }, {}, method: :put %>
+        <% end %>
       </td>
 
     </tr>

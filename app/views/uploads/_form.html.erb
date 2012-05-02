@@ -45,7 +45,13 @@
 
       <div class="field">
         <%= f.label :status %>
-        : <%= @upload.status %>
+        : <%= Upload::UPLOAD_STATUS[@upload.status] %>
+        <% case @upload.status %>
+          <% when 1 %>
+            <%= link_icon_to :lock, 'Lock to process', {controller: 'uploads', action: 'update', id: @upload.id, status: @upload.status + 1}, {}, method: :put %>
+          <% when 2 %>
+          <%= link_icon_to :unlock, 'Unlock to add more files', {controller: 'uploads', action: 'update', id: @upload.id, status: @upload.status - 1 }, {}, method: :put %>
+        <% end %>
       </div>
 
       <div class="field">
