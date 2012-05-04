@@ -6,8 +6,8 @@ class Upload < ActiveRecord::Base
   attr_accessible :date, :info, :name, :status, :user_id
 
   validates :name, :status, :user_id, presence: true
-  validates_uniqueness_of :name, :scope => :user_id
   validate :directory_valid
+  validates_uniqueness_of :name, :scope => :user_id
 
   belongs_to :user
   has_many :uploaded_files, :dependent => :destroy
@@ -15,16 +15,44 @@ class Upload < ActiveRecord::Base
   before_destroy :delete_upload_dir
 
   UPLOAD_STATUS = %w( Closed Uploading Uploaded Processing Ingested )
+  ALLOWED_STATUS_CHANGES_FOR_USER = {
+      1 => [2],
+      2 => [1]
+  }
+
+  ALLOWED_STATUS_CHANGES_FOR_ADMIN = {
+      2 => [3],
+      3 => [1, 4],
+      4 => [0, 1, 3]
+  }
+
+  def status_options(admin = false)
+    allowed_status_changes = (admin ? ALLOWED_STATUS_CHANGES_FOR_ADMIN : ALLOWED_STATUS_CHANGES_FOR_USER)
+    allowed_status = Array.new(allowed_status_changes[self.status] || []) << self.status
+    allowed_status.sort.collect { |i| [ UPLOAD_STATUS[i], i ] }
+  end
 
   def full_path
     self.user.full_path + self.name
+  end
+
+  def date_string
+    self.date.getlocal.strftime "%A %d %B %Y %H:%M:%S"
+  end
+
+  def date_short_string
+    self.date.getlocal.strftime "%Y/%m/%d - %H:%M:%S"
+  end
+
+  def status_string
+    UPLOAD_STATUS[self.status]
   end
 
   private
 
   def directory_valid
     self.name = Pathname.new(self.name).cleanpath.to_s
-    errors.add(:name, 'Illegal upload directory') if self.name =~ /^\.\.($|[^.]+)/
+    errors.add(:name, 'Illegal upload directory') if self.name =~ /^\.($|\.($|[^.]+))/
     self.name.gsub!(/^\//,'')
   end
 

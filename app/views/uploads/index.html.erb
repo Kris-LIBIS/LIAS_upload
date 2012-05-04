@@ -7,7 +7,6 @@
     <th>Directory</th>
     <th>Files</th>
     <th>Status</th>
-    <th>Info</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -15,23 +14,16 @@
   <tbody>
   <% @uploads.each do |upload| %>
     <tr>
-      <td><%= upload.date %></td>
+      <td><%= upload.date_short_string %></td>
       <td><%= upload.name %></td>
       <td><%= upload.uploaded_files.count %></td>
-      <td><%= Upload::UPLOAD_STATUS[upload.status] %></td>
-      <td><%= upload.info %></td>
+      <td><%= upload.status_string %></td>
 
       <td>
         <%= link_icon_to :view, 'Show upload', upload_path(upload) %>
         <%= link_icon_to :edit, 'Edit upload', edit_upload_path(upload) %>
         <%= link_icon_to :delete, 'Delete upload', upload_path(upload), {},
                          confirm: "This will remove the opload session and its uploaded data.\nAre you sure?", method: :delete %>
-        <% case upload.status %>
-          <% when 1 %>
-            <%= link_icon_to :unlock, 'Lock to process', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status + 1}, {}, method: :put %>
-          <% when 2 %>
-          <%= link_icon_to :lock, 'Unlock to add more files', {controller: 'uploads', action: 'update', id: upload.id, status: upload.status - 1 }, {}, method: :put %>
-        <% end %>
       </td>
 
     </tr>
@@ -42,10 +34,9 @@
   <tr>
     <td colspan="20">
       <%= link_icon_to :add, 'New upload', new_upload_path %>
-      <%= paging_tags('uploads_table', 0 => :rsort, 5 => :nosort) %>
+      <%= paging_tags('uploads_table', 0 => :rsort, 4 => :nosort) %>
     </td>
   </tr>
   </tfoot>
 
 </table>
-

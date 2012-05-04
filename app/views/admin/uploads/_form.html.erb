@@ -40,13 +40,13 @@
 
       <div class="field">
         <%= f.label :date %>:
-        <%= @upload.date %>
+        <%= @upload.date_string %>
       </div>
 
       <div class="field">
         <%= f.label :status %>
         <br/>
-        <%= f.number_field :status %>
+        <%= f.select :status, @upload.status_options(true) %>
       </div>
 
       <div class="field">

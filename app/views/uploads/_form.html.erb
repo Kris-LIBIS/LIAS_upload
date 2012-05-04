@@ -34,24 +34,17 @@
 
       <div class="field">
         <%= f.label :name, 'Directory' %>
-        <br/>
-        <%= f.text_field :name %>
+        : <%= f.text_field :name, readonly: @upload.id  %>
       </div>
 
       <div class="field">
         <%= f.label :date %>
-        : <%= @upload.date %>
+        : <%= @upload.date.getlocal.strftime "%A %d %B %Y %H:%M:%S.%L" %>
       </div>
 
       <div class="field">
         <%= f.label :status %>
-        : <%= Upload::UPLOAD_STATUS[@upload.status] %>
-        <% case @upload.status %>
-          <% when 1 %>
-            <%= link_icon_to :lock, 'Lock to process', {controller: 'uploads', action: 'update', id: @upload.id, status: @upload.status + 1}, {}, method: :put %>
-          <% when 2 %>
-          <%= link_icon_to :unlock, 'Unlock to add more files', {controller: 'uploads', action: 'update', id: @upload.id, status: @upload.status - 1 }, {}, method: :put %>
-        <% end %>
+        : <%= f.select :status, @upload.status_options(false) %>
       </div>
 
       <div class="field">

@@ -1,19 +1,30 @@
 <div class="upload_info">
   <h1>Upload to <%= upload.name %></h1>
 
-  <p>
-    <b>User: </b>
-    <% if upload.user %>
-      <%= upload.user.name %>
-    <% else %>
-      <%= " ------ " %>
-    <% end %>
-  </p>
+  <table id="upload_info">
+    <tbody>
 
-  <p>
-    <b>Date: </b>
-    <%= upload.date %>
-  </p>
+    <tr>
+      <td width="100px"><b>User: </b></td>
+      <td><%= upload.user ? upload.user.name : " ------ " %></td>
+    </tr>
+
+    <tr>
+      <td><b>Date: </b></td>
+      <td><%= upload.date_string %></tr>
+
+    <tr>
+      <td><b>Status:</b></td>
+      <td><%= upload.status_string %></td>
+    </tr>
+
+    <tr>
+      <td><b>Info:</b></td>
+      <td><%= upload.info %></td>
+    </tr>
+
+    </tbody>
+  </table>
 </div>
 
 <%= link_to 'Edit', edit_admin_upload_path(upload) %>

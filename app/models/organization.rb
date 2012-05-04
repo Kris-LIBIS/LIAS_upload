@@ -20,7 +20,7 @@ class Organization < ActiveRecord::Base
 
   def directory_valid
     self.upload_directory = Pathname.new(self.upload_directory).cleanpath.to_s
-    errors.add(:upload_directory, 'Illegal upload directory') if self.upload_directory =~ /^\.\.($|[^.]+)/
+    errors.add(:upload_directory, 'Illegal upload directory') if self.upload_directory =~ /^\.($|\.($|[^.]+))/
     self.upload_directory.gsub!(/^\//,'')
   end
 

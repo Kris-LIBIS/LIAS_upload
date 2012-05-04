@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
   def directory_valid
     self.upload_dir = Pathname.new(self.upload_dir).cleanpath.to_s
-    errors.add(:upload_dir, 'Illegal upload directory') if self.upload_dir =~ /^\.\.($|[^.]+)/
+    errors.add(:upload_dir, 'Illegal upload directory') if self.upload_dir =~ /^\.($|\.($|[^.]+))/
     self.upload_dir.gsub!(/^\//,'')
   end
 
