@@ -16,7 +16,12 @@
     <tr>
       <td><%= upload.date_short_string %></td>
       <td><%= upload.name %></td>
-      <td><%= upload.uploaded_files.count %></td>
+      <td>
+        <%= upload.uploaded_files.count %>
+        <% if upload.status == 1 %>
+          <%= link_icon_to :add, 'Upload files', uploads_add_files_path(upload) %>
+        <% end %>
+      </td>
       <td><%= upload.status_string %></td>
 
       <td>
