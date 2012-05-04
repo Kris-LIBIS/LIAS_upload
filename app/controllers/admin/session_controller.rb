@@ -17,7 +17,6 @@ class Admin::SessionController < ApplicationController
     if user and user.authenticate(params[:password])
       session[:user_id] = user.id
       if user.admin?
-        session[:admin] = true
         redirect_to admin_path
       else
         redirect_to front_end_url
@@ -29,8 +28,7 @@ class Admin::SessionController < ApplicationController
 
   # POST /logout
   def destroy
-    session[:user_id] = nil
-    session.delete :admin
+    session.delete :user_id
     redirect_to login_url, :notice => "Logged out"
   end
 

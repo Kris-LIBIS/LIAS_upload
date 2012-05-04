@@ -10,10 +10,10 @@ class ApplicationController < ActionController::Base
   def authorize
     if request.format == Mime::HTML or request.format == '*/*'
       if !session[:expire] or session[:expire] < Time.now
-        redirect_to(login_path, notice: "You were logged out due to inactivity. Please log in again.", user_id: session[:user_id]) and return
+        redirect_to(login_path, notice: "You were logged out due to inactivity. Please log in again.", user_id: clear_session) and return
       end
       unless User.find_by_id(session[:user_id])
-        redirect_to(login_path, notice: "Please log in", user_id: session[:user_id]) and return
+        redirect_to(login_path, notice: "Please log in", user_id: clear_session) and return
       end
     else
       authenticate_or_request_with_http_basic do |username, password|
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def administrator
     if request.format == Mime::HTML
-      unless (user = User.find_by_id(session[:user_id])) && user.admin?
+      unless current_user_is_admin?
         # TODO: Flash does not show. Why?
         flash[:alert] = 'Access only allowed for administrators.'
         redirect_to(front_end_path) and return false
@@ -41,11 +41,22 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def clear_session
+    user_id = session[:user_id]
+    session.delete :user_id
+    user_id
+  end
+
   def current_user
     return nil unless (user_id = session[:user_id])
     User.find(user_id)
   rescue ActiveRecord::RecordNotFound
     nil
+  end
+
+  def current_user_is_admin?
+    user = current_user
+    user.nil? ? false : user.admin?
   end
 
   def current_organization
