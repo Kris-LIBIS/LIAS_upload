@@ -1,0 +1,63 @@
+<div class="user_form">
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%=raw t('errors.template.header', count: @user.errors.count,
+        model: t('activerecord.models.user')) %>.</h2>
+      <p><%= t('errors.template.body') %></p>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%=raw msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <%= form_for @user, url: my_account_path, method: :put do |f| %>
+
+    <fieldset>
+
+      <legend>Enter user details</legend>
+
+      <div class="field">
+        <%= f.label :name %>
+        <br/>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :email %>
+        <br/>
+        <%= f.email_field :email %>
+      </div>
+      <div class="field">
+        <%= f.label :organization_id %>: <%= @user.organization.name %>
+      </div>
+      <div class="field">
+        <%= f.label :upload_dir %>: <%= @user.upload_dir %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password, 'Password' %>
+        <br/>
+        <%= f.password_field :password, size: 40 %>
+      </div>
+      <div class="field">
+        <%= f.label :password_confirmation, 'Confirm' %>:
+        <br/>
+        <%= f.password_field :password_confirmation, size: 40 %>
+      </div>
+
+      <br/>
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+
+    </fieldset>
+
+  <% end %>
+
+
+</div>

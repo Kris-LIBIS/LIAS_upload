@@ -60,14 +60,8 @@
 
 <div id="columns">
   <div id="side">
-    <% if session[:user_id] %>
-      <div class="current_user">
-        <%= User.find(session[:user_id]).name %>
-        <%= button_to t('login.logout'), logout_path, :method => :delete %>
-      </div>
-    <% end %>
     <ul>
-      <% if session[:admin] %>
+      <% if current_user_is_admin? %>
         <li id="Admin_menu" <%= "style='font-style: italic;'" if controller.controller_name == 'admin' %>>
           <%= link_to t('menu.administration'), admin_path %>
           <ul>
@@ -86,6 +80,13 @@
       <% if session[:user_id] %>
         <li><%= link_to t('menu.my_uploads'), uploads_path %></li>
       <% end %>
+      <% if current_user %>
+        <br/>
+        <li  class="current_user">
+          <%= link_to User.find(session[:user_id]).name, my_account_path %> <br/>
+          <%= button_to t('login.logout'), logout_path, :method => :delete %>
+        </li>
+      <% end %>
     </ul>
   </div>
   <div id="main">
@@ -94,7 +95,9 @@
 </div>
 
   <footer>
-    <!--%=  session.inspect %-->
+    <% if Rails.env == 'development' %>
+      <%=  session.inspect %>
+    <% end %>
   </footer>
 </body>
 </html>

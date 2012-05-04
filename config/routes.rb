@@ -29,6 +29,10 @@ LIASUpload::Application.routes.draw do
     match 'uploads/:id/upload' => 'uploads#upload', as: :uploads_upload
     match 'uploads/:id/add_files' => 'uploads#add_files', as: :uploads_add_files
 
+    match 'my_account' => 'users#show', via: :get
+    match 'my_account/edit' => 'users#edit', via: :get
+    match 'my_account' => 'users#update', via: :put
+
     root to: 'front_end#index', as: :front_end
 
   end

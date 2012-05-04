@@ -1,0 +1,28 @@
+<h1>User</h1>
+
+<p>
+  <b>Name: </b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Email: </b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Organization: </b>
+  <% if @user.organization %>
+    <%= @user.organization.name %>
+  <% else %>
+    <%= ' --- orphan --- ' %>
+  <% end %>
+</p>
+
+<p>
+  <b>Upload dir: </b>
+  <%= @user.upload_dir %>
+</p>
+
+<%= link_to 'Edit', my_account_edit_path %> |
+<%= link_to 'Uploads', uploads_path %>
