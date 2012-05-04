@@ -62,10 +62,6 @@ module TagsHelper
 
   end
 
-
-
-
-
   private
 
   ACTION_TO_ICON = {
