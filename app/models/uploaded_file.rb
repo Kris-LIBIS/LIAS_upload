@@ -31,7 +31,7 @@ class UploadedFile < ActiveRecord::Base
   end
 
   def delete_file
-    FileUtils.rm_f self.local_path
+    FileUtils.rm_f self.local_path if self.local_path
   end
 
 end
