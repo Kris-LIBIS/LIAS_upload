@@ -3,7 +3,7 @@ require 'pathname'
 
 class UploadedFile < ActiveRecord::Base
   #noinspection RailsParamDefResolve
-  attr_accessible :file_name, :md5sum, :mimetype, :modification_date, :relative_path, :source_path, :upload_id, :local_path
+  attr_accessible :file_name, :md5sum, :mimetype, :modification_date, :relative_path, :source_path, :upload_id, :local_path, :updated_at
 
   validate :file_path_valid
 

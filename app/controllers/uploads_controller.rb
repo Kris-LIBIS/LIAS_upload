@@ -53,7 +53,7 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       if @upload.save
-        format.html { redirect_to upload_path(@upload), notice: 'Upload was successfully created.' }
+        format.html { redirect_to uploads_path, notice: 'Upload was successfully created.' }
         format.json { render json: @upload, status: :created, location: @upload }
       else
         format.html { render action: "new" }
@@ -67,15 +67,9 @@ class UploadsController < ApplicationController
   def update
     upload = Upload.find(params[:id])
 
-    target = upload_path(upload)
-    if params[:status]
-      params[:upload] = {status: params[:status]}
-      target = :back
-    end
-
     respond_to do |format|
       if upload.update_attributes(params[:upload])
-        format.html { redirect_to target, notice: 'Upload was successfully updated.' }
+        format.html { redirect_to uploads_path, notice: 'Upload was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -165,7 +159,8 @@ class UploadsController < ApplicationController
               mimetype: file_data.content_type,
               md5sum: md5sum,
               # modification_date: params[:filemodificationdate0],
-              local_path: target_path.to_s
+              local_path: target_path.to_s,
+              updated_at: Time.now
           }
 
           begin
