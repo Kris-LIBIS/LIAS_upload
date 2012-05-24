@@ -14,5 +14,5 @@ production:
   inactivity_timeout:   30
   chunk_size:            50000000
   files_per_request:    1
-  upload_dir:            data
+  upload_dir:            /nas/vol04/upload/flandrica
 
