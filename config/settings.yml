@@ -1,18 +1,18 @@
 testing:
-  inactivity_timeout:   5
+  inactivity_timeout:    60
   chunk_size:            1000
-  files_per_request:    1
+  files_per_request:     
   upload_dir:            data
   
 development:
-  inactivity_timeout:   60
+  inactivity_timeout:    60
   chunk_size:            1000000
-  files_per_request:    1
+  files_per_request:     
   upload_dir:            data
 
 production:
-  inactivity_timeout:   30
-  chunk_size:            50000000
-  files_per_request:    1
+  inactivity_timeout:    120
+  chunk_size:            5000000
+  files_per_request:     
   upload_dir:            /nas/vol04/upload/flandrica
 
