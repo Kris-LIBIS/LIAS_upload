@@ -3,7 +3,9 @@
   <td><%= uploaded_file.mimetype %></td>
   <td>
     <%= link_icon_to :view, 'Show', upload_uploaded_file_path(uploaded_file.upload, uploaded_file) %>
+    <% if uploaded_file.upload.status == 1 %>
     <%= link_icon_to :delete, 'Destroy', upload_uploaded_file_path(uploaded_file.upload, uploaded_file), {},
                      confirm: "This will remove the file on the server.\nAre you sure?", method: :delete %>
+    <% end %>
   </td>
 </tr>

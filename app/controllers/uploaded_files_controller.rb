@@ -49,7 +49,11 @@ class UploadedFilesController < ApplicationController
   def destroy
     @uploaded_file = UploadedFile.find(params[:id])
     upload = @uploaded_file.upload
-    @uploaded_file.destroy
+    if upload.status == 1
+      @uploaded_file.destroy
+    else
+      flash[:alert] = 'Deleting a file is not allowed at this stage of the upload.'
+    end
 
     respond_to do |format|
       format.html { redirect_to  upload_path(upload) }
