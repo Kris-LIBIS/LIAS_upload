@@ -20,7 +20,7 @@ class UploadedFile < ActiveRecord::Base
   end
 
   def checksum_line
-    "#{self.md5sum} *#{Pathname.new(self.local_path) + self.file_name}"
+    "#{self.md5sum} *#{relative_file_path}"
   end
 
   private

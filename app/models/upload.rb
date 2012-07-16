@@ -56,8 +56,12 @@ class Upload < ActiveRecord::Base
   private
 
   def attribute_changed(attr, old_value, new_value)
-    if attr == 'status' and old_value == 2 and new_value == 3
-      fp = File.open(self.full_path + '.checksums', 'w')
+    if attr == 'status' and old_value == 2 and new_value.to_i == 3
+      checksum_file = self.full_path.to_s + '.checksums'
+      LIASUpload::Application.configure do
+        config.logger.info "Creating checksum file '#{checksum_file.to_s}'"
+      end
+      fp = File.open(checksum_file, 'w')
       self.uploaded_files.each do |file|
         fp.puts file.checksum_line
       end
