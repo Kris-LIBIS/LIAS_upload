@@ -29,7 +29,7 @@ class Upload < ActiveRecord::Base
   def status_options(admin = false)
     allowed_status_changes = (admin ? ALLOWED_STATUS_CHANGES_FOR_ADMIN : ALLOWED_STATUS_CHANGES_FOR_USER)
     allowed_status = Array.new(allowed_status_changes[self.status] || []) << self.status
-    allowed_status.sort.collect { |i| [ UPLOAD_STATUS[i], i ] }
+    allowed_status.sort.collect { |i| [UPLOAD_STATUS[i], i] }
   end
 
   def full_path
@@ -48,12 +48,28 @@ class Upload < ActiveRecord::Base
     UPLOAD_STATUS[self.status]
   end
 
+  def write_attribute(attr_name, value)
+    returning(super) do
+      attribute_changed(attr_name, read_attribute(attr_value), value)
+    end
+  end
+
   private
+
+  def attribute_changed(attr, old_value, new_value)
+    if attr == 'status' and old_value == 2 and new_value == 3
+      fp = File.open(self.full_path + '.checksums', 'w')
+      self.uploaded_files.each do |file|
+        fp.puts file.checksum_line
+      end
+      fp.close
+    end
+  end
 
   def directory_valid
     self.name = Pathname.new(self.name).cleanpath.to_s
     errors.add(:name, 'Illegal upload directory') if self.name =~ /^\.($|\.($|[^.]+))/
-    self.name.gsub!(/^\//,'')
+    self.name.gsub!(/^\//, '')
   end
 
   def delete_upload_dir

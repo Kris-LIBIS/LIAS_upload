@@ -19,6 +19,10 @@ class UploadedFile < ActiveRecord::Base
     self.upload.full_path + relative_path
   end
 
+  def checksum_line
+    "#{self.md5sum} *#{Pathname.new(self.local_path) + self.file_name}"
+  end
+
   private
 
   def file_path_valid
