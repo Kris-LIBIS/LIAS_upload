@@ -73,4 +73,6 @@ platforms :ruby do
   gem 'thin'
 end
 
+gem 'SyslogLogger'
+
 # gem  'will_paginate', '~> 3.0'
