@@ -63,6 +63,9 @@ end
 before "deploy:update_code", "remote:fw_off"
 after  "deploy:update_code", "remote:fw_on"
 
+before "git:prepare_tree", "remote:fw_off"
+after  "git:prepare_tree", "remote:fw_on"
+
 after  "deploy:update", "remote:create_symlinks", "deploy:cleanup"
 
 after "deploy:update_code", :bundle_install, "remote:create_symlinks"
