@@ -1,49 +1,50 @@
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
+require 'capistrano-deploytags'
 set :rvm_type, :system
 
 default_run_options[:pty] = true
 
 set :application, "LIAS Uploader"
 set :repository,  "git@github.com:Kris-LIBIS/LIAS_upload.git"
-set :deploy_to, "/exlibris/LIAS_upload"
-set :user, 'exlibris'
 
-set :server_name, 'upload.lias.be'
-
-role :web, server_name                          # Your HTTP server, Apache/etc
-role :app, server_name                          # This may be the same as your `Web` server
-role :db,  server_name, :primary => true # This is where Rails migrations will run
-
-set :deploy_via, :remote_cache
-set :scm, 'git'
+set :scm, :git
 set :branch, 'master'
-set :scm_verbose, true
+set :stage, 'production'
+
+set :deploy_to, "/opt/libis/LIAS_upload"
+set :user, 'exlibris'
 set :use_sudo, false
 
-# if you want to clean up old releases on each deploy uncomment this:
-# after "deploy:restart", "deploy:cleanup"
+set :keep_releases, 2
 
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
+server 'upload.lias.be', :web, :app, :db, :primary => true
 
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
-namespace :deploy do
+set :deploy_via, :remote_cache
+set :scm_verbose, true
 
-  task :install_secure_files do
+namespace :remote do
+
+  task :fw_off do
+    run "sudo /etc/init.d/firewall stop"
+  end
+
+  task :fw_on do
+    run "sudo /etc/init.d/firewall start"
+  end
+
+  task :create_symlinks do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
   end
 
-  task :restart do
-    run "touch #{current_path}/tmp/restart.txt"
+end
+
+namespace :deploy do
+
+  task :start do ; end
+  task :stop do ; end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
   task :seed do
@@ -59,8 +60,15 @@ namespace :deploy do
   end
 end
 
-after "deploy:update_code", :bundle_install, "deploy:install_secure_files"
+before "deploy:update_code", "remote:fw_off"
+after  "deploy:update_code", "remote:fw_on"
+
+after  "deploy:update", "remote:create_symlinks", "deploy:cleanup"
+
+after "deploy:update_code", :bundle_install, "remote:create_symlinks"
+
 desc "install the necessary prerequisites"
 task :bundle_install, :roles => :app do
   run "cd #{release_path} && bundle install"
 end
+
