@@ -33,7 +33,7 @@ namespace :remote do
   end
 
   task :create_symlinks do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+#    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
   end
 
