@@ -52,7 +52,7 @@ class UploadedFilesController < ApplicationController
     if upload.status == 1
       @uploaded_file.destroy
     else
-      flash[:alert] = 'Deleting a file is not allowed at this stage of the upload.'
+      flash[:alert] = "Deleting a file in an upload with status '#{upload.status_string}' is not allowed."
     end
 
     respond_to do |format|

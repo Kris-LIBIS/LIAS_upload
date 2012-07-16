@@ -82,7 +82,11 @@ class UploadsController < ApplicationController
   # DELETE /uploads/1.json
   def destroy
     upload = Upload.find(params[:id])
-    upload.destroy
+    if upload.status == 1
+      upload.destroy
+    else
+      flash[:alert] = "Deleting an upload with status '#{upload.status_string}' is not allowed."
+    end
 
     respond_to do |format|
       format.html { redirect_to uploads_url }
