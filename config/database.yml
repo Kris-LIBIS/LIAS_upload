@@ -20,6 +20,6 @@ test:
 
 production:
   adapter: sqlite3
-  database: /exlibris/LIAS_upload/production.sqlite3
-  pool: 1
+  database: /opt/libis/LIAS_upload/production.sqlite3
+  pool: 5
   timeout: 10000
