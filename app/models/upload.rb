@@ -49,7 +49,7 @@ class Upload < ActiveRecord::Base
   end
 
   def write_attribute(attr_name, value)
-    attribute_changed(attr_name, read_attribute(attr_value), value)
+    attribute_changed(attr_name, read_attribute(attr_name), value)
     super
   end
 
