@@ -1,4 +1,4 @@
-require 'syslog_logger'
+require 'syslog/logger'
 
 LIASUpload::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
