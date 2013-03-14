@@ -1,6 +1,7 @@
 require 'rvm/capistrano'
 require 'capistrano-deploytags'
-set :rvm_type, :system
+set :rvm_type, :local
+set :rvm_ruby_string, 'ruby@uploader'
 
 default_run_options[:pty] = true
 

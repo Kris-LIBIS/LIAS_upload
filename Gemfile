@@ -76,3 +76,7 @@ end
 gem 'SyslogLogger', '~> 2.0'
 
 # gem  'will_paginate', '~> 3.0'
+
+gem 'rvm-capistrano'
+
+gem 'capistrano-deploytags'
