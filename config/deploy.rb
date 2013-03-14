@@ -1,23 +1,23 @@
-require "rvm/capistrano"
+require 'rvm/capistrano'
 require 'capistrano-deploytags'
 set :rvm_type, :system
 
 default_run_options[:pty] = true
 
-set :application, "LIAS Uploader"
-set :repository,  "git@github.com:Kris-LIBIS/LIAS_upload.git"
+set :application, 'LIAS Uploader'
+set :repository, 'git@github.com:Kris-LIBIS/LIAS_upload.git'
 
 set :scm, :git
 set :branch, 'master'
 set :stage, 'production'
 
-set :deploy_to, "/opt/libis/LIAS_upload"
-set :user, 'exlibris'
+set :deploy_to, '/opt/libis/LIAS_Uploader'
+set :user, 'lias'
 set :use_sudo, false
 
 set :keep_releases, 2
 
-server 'upload.lias.be', :web, :app, :db, :primary => true
+server 'upload2.lias.be', :web, :app, :db, :primary => true
 
 set :deploy_via, :remote_cache
 set :scm_verbose, true
@@ -25,11 +25,11 @@ set :scm_verbose, true
 namespace :remote do
 
   task :fw_off do
-    run "sudo /etc/init.d/firewall stop"
+    run 'sudo /etc/init.d/firewall stop'
   end
 
   task :fw_on do
-    run "sudo /etc/init.d/firewall start"
+    run 'sudo /etc/init.d/firewall start'
   end
 
   task :create_symlinks do
@@ -43,7 +43,7 @@ namespace :deploy do
 
   task :start do ; end
   task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
+  task :restart, roles: :app, except: {:no_release => true} do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
@@ -60,21 +60,21 @@ namespace :deploy do
   end
 end
 
-before "deploy:update_code", "remote:fw_off"
-after  "deploy:update_code", "remote:fw_on"
+before 'deploy:update_code', 'remote:fw_off'
+after  'deploy:update_code', 'remote:fw_on'
 
-before "git:prepare_tree", "remote:fw_off"
-after  "git:prepare_tree", "remote:fw_on"
+before 'git:prepare_tree', 'remote:fw_off'
+after  'git:prepare_tree', 'remote:fw_on'
 
-after  "deploy:update", "remote:create_symlinks", "deploy:cleanup"
+after  'deploy:update', 'remote:create_symlinks', 'deploy:cleanup'
 
-after "deploy:update_code", :bundle_install, "remote:create_symlinks"
+after 'deploy:update_code', :bundle_install, 'remote:create_symlinks'
 
-desc "install the necessary prerequisites"
-task :bundle_install, :roles => :app do
+desc 'install the necessary prerequisites'
+task :bundle_install, roles: :app do
   run "cd #{release_path} && bundle install"
 end
 
-before "bundle_install", "remote:fw_off"
-after  "bundle_install", "remote:fw_on"
+before 'bundle_install', 'remote:fw_off'
+after  'bundle_install', 'remote:fw_on'
 
