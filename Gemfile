@@ -9,27 +9,14 @@ platforms :jruby do
   gem 'activerecord-jdbc-adapter', :require => false
 end
 
-group :development, :test do
-  platforms :jruby do
-    gem 'jdbc-sqlite3', :require => false
-  end
-  platforms :ruby do
-    gem 'sqlite3', :require => 'sqlite3'
-  end
+platforms :jruby do
+  gem 'jdbc-sqlite3', :require => false
+#  gem 'jdbc-mysql'
 end
-
-# Production
-group :production do
-  platforms :jruby do
-    gem 'jdbc-sqlite3', :require => false
-#    gem 'jdbc-mysql'
-  end
-  platforms :ruby do
-    gem 'sqlite3', :require => 'sqlite3'
-#    gem 'mysql2'
-  end
+platforms :ruby do
+  gem 'sqlite3', :require => 'sqlite3'
+#  gem 'mysql2'
 end
-
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -51,7 +38,7 @@ end
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
-gem 'bcrypt-ruby'
+gem 'bcrypt'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
