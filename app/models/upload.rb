@@ -17,7 +17,8 @@ class Upload < ActiveRecord::Base
   UPLOAD_STATUS = %w( Closed Uploading Uploaded Processing Ingested )
   ALLOWED_STATUS_CHANGES_FOR_USER = {
       1 => [2],
-      2 => [1]
+      2 => [1],
+      4 => [0]
   }
 
   ALLOWED_STATUS_CHANGES_FOR_ADMIN = {
