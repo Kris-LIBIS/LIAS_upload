@@ -1,0 +1,30 @@
+<%= render 'fine_uploader_template' %>
+
+<div id="uploader">
+  <script>
+      var uploader = new qq.FineUploader({
+          element: document.getElementById('uploader'),
+          template: 'qq-template',
+          debug: true,
+          request: {
+              endpoint: '/file_upload',
+              params: {
+                  upload_id: <%= @upload.id %>
+              },
+              filenameParam: 'file_name',
+              uuidName: 'uuid',
+              totalFileSizeName: 'total_size'
+          },
+          chunking: {
+              enabled: true,
+              partSize: 100000,
+              paramNames: {
+                  chunksize: 'chunk_size',
+                  partByteOffset: 'part_offset',
+                  partIndex: 'part_index',
+                  totalParts: 'total_parts'
+              }
+          }
+      })
+  </script>
+</div>

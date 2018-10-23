@@ -1,5 +1,5 @@
 class Admin::UploadedFilesController < ApplicationController
-  before_filter :administrator
+  before_action :administrator
 
   # GET /admin/uploaded_files
   # GET /admin/uploaded_files.json
@@ -42,7 +42,7 @@ class Admin::UploadedFilesController < ApplicationController
   # POST /admin/uploaded_files
   # POST /admin/uploaded_files.json
   def create
-    @uploaded_file = UploadedFile.new(params[:uploaded_file])
+    @uploaded_file = UploadedFile.new(file_params)
 
     respond_to do |format|
       if @uploaded_file.save
@@ -61,7 +61,7 @@ class Admin::UploadedFilesController < ApplicationController
     @uploaded_file = UploadedFile.find(params[:id])
 
     respond_to do |format|
-      if @uploaded_file.update_attributes(params[:uploaded_file])
+      if @uploaded_file.update_attributes(file_params)
         format.html { redirect_to @uploaded_file, notice: 'Uploaded file was successfully updated.' }
         format.json { head :no_content }
       else
@@ -81,5 +81,13 @@ class Admin::UploadedFilesController < ApplicationController
       format.html { redirect_to  uploads_path }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def file_params
+    params.require(:uploaded_file).
+        require(:file_name).
+        permit(:md5sum, :mimetype, :modification_date, :relative_path, :source_path, :upload_id, :local_path, :updated_at)
   end
 end

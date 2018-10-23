@@ -1,3 +1,6 @@
+# Sample localization file for Dutch. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
 nl:
 
 # menu
@@ -13,7 +16,6 @@ nl:
     login:    'Aanmelden'
     logout:   'Afmelden'
 
-
   password:           'wachtwoord'
   password_confirm:   'bevestig wachtwoord'
 
@@ -26,24 +28,30 @@ nl:
 
   activerecord:
     models:
-      organization:   'organisatie'
-      user:           'gebruiker'
-      upload:         'oplaadsessie'
-      uploaded_file:  'bestand'
+      organization:         'Organisatie'
+      organizations:        'Organisaties'
+      user:                 'Gebruiker'
+      users:                'Gebruikers'
+      upload:               'Oplaadsessie'
+      uploads:              'Oplaadsessies'
+      uploaded_file:        'Bestand'
+      uploaded_files:       'Bestanden'
     attributes:
       organization:
-        name:               'naam'
-        contact:            'verantwoordelijke'
-        upload_directory:   'folder'
+        name:               'Naam'
+        contact:            'Verantwoordelijke'
+        upload_directory:   'Folder'
+        users:              "Gebruikers"
+        actions:            "Acties"
       user:
-        name:               'naam'
-        organization_id:    'organisatie'
-        admin:              'beheerder'
-        upload_dir:         'folder'
-        password_digest:    'wachtwoord'
-        email:              'e-mail adres'
-        password:           'wachtwoord'
-        confirmation:     'bevestiging'
+        name:               'Naam'
+        organization_id:    'Organisatie'
+        admin:              'Beheerder'
+        upload_dir:         'Folder'
+        password_digest:    'Wachtwoord'
+        email:              'E-mail adres'
+        password:           'Wachtwoord'
+        confirmation:       'Bevestiging'
 
     errors:
       models:
@@ -53,21 +61,27 @@ nl:
               confirmation: 'en bevestiging zijn niet gelijk'
 
       messages:
-        inclusion: "is niet geldig"
-        blank:     "mag niet blanco zijn"
-        taken:      'is reeds in gebruik'
+        inclusion:          'is niet geldig'
+        blank:              'mag niet blanco zijn'
+        taken:              'is reeds in gebruik'
 
   errors:
     template:
-      body:        "Volgende velden hebben problemen:"
+      body:                 'Volgende velden hebben problemen:'
       header:
-        one:       "1 fout belet het bewaren van %{model}"
-        other:     "%{count} fout beletten het bewaren van %{model}"
+        one:                'Een fout belet het bewaren van %{model}'
+        other:              '%{count} fouten beletten het bewaren van %{model}'
 
   views:
     pagination:
-      first: "&laquo;"
-      last: "&raquo;"
-      previous: "&lsaquo;"
-      next: "&rsaquo;"
-      truncate: "&hellip;"
+      first:      '&laquo;'
+      last:       '&raquo;'
+      previous:   '&lsaquo;'
+      next:       '&rsaquo;'
+      truncate:   '&hellip;'
+    organisation:
+      infobox:    'Organisatie informatie'
+    links:
+      edit:       'Wijzig'
+      delete:     'Verwijder'
+      delete_confirm: 'De organisatie en al zijn gebruikers en oplaadsessies zullen worden verwijderd.\nDoorgaan?'

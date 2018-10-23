@@ -11,7 +11,7 @@
     $(document).ready(function () {
       $("#alert")
         .delay(500)
-        .effect("pulsate", {times: 2, mode: "show", duration: 1000});
+        .toggle("pulsate", {times: 2, mode: "show", duration: 1000});
       $("#notice")
         .delay(3000)
         .fadeOut(2000);
@@ -36,7 +36,7 @@
       </tbody>
     </table>
 
-  <%= form_tag front_end_path, class: 'locale' do %>
+  <%= form_tag locale_path, class: 'locale' do %>
     <%= select_tag 'set_locale', options_for_select(LANGUAGES, I18n.locale.to_s),
                    onchange: 'this.form.submit()' %>
     <%= submit_tag 'submit' %>
@@ -95,9 +95,9 @@
 </div>
 
   <footer>
-    <% if Rails.env == 'development' %>
-      <%=  session.inspect %>
-    <% end %>
+    <%# if Rails.env == 'development' %>
+      <%#=  session.inspect %>
+    <%# end %>
   </footer>
 </body>
 </html>

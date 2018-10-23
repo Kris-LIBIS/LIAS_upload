@@ -3,7 +3,7 @@
 <%= form_tag admin_uploads_path, :method => 'get', :class => 'user_filter' do %>
   Filter:
   <%= select_tag :user_id,
-                 options_from_collection_for_select(User.all(order: "name ASC"), :id, :name, @user ? @user.id : 0), prompt: '-- all users --',
+                 options_from_collection_for_select(User.all.order(name: :asc), :id, :name, @user ? @user.id : 0), prompt: '-- all users --',
                  onchange: 'this.form.submit()' %>
   <%= submit_tag 'apply' %>
   <%= javascript_tag "$('.user_filter input').hide()" %>

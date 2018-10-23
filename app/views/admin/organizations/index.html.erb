@@ -1,13 +1,13 @@
-<h1>List of organizations</h1>
+<h1><%= t('activerecord.models.organizations') %></h1>
 
 <table class="tablesorter" id="admin_organization_table">
   <thead >
   <tr>
-    <th>Name</th>
-    <th>Upload directory</th>
-    <th>Contact</th>
-    <th>Users</th>
-    <th>Actions</th>
+    <th><%= t('activerecord.attributes.organization.name') %></th>
+    <th><%= t('activerecord.attributes.organization.upload_directory') %></th>
+    <th><%= t('activerecord.attributes.organization.contact') %></th>
+    <th><%= t('activerecord.attributes.organization.users') %></th>
+    <th><%= t('activerecord.attributes.organization.actions') %></th>
   </tr>
   </thead>
 
@@ -23,10 +23,10 @@
         <%= link_icon_to :view, 'Users', admin_users_path(organization_id: organization.id) %>
       </td>
       <td>
-        <%= link_icon_to :view, 'Show', admin_organization_path(organization) %>
-        <%= link_icon_to :edit, 'Edit', edit_admin_organization_path(organization) %>
-        <%= link_icon_to :delete, 'Destroy', admin_organization_path(organization), {},
-                         confirm: "This will remove the organization and all its users and all the uploaded data.\nAre you sure?", method: :delete %>
+        <%= link_icon_to :edit, t('views.links.edit'), edit_admin_organization_path(organization) %>
+        <%= link_icon_to :delete, t('views.links.delete'), admin_organization_path(organization), {},
+                         method: :delete, data: { confirm: t('views.links.delete_confirm')}
+        %>
       </td>
     </tr>
   <% end %>

@@ -27,7 +27,7 @@
       <td>
         <%= link_icon_to :view, 'Show upload', upload_path(upload) %>
         <%= link_icon_to :edit, 'Edit upload', edit_upload_path(upload) %>
-        <% if upload.status == 1 %>
+        <% if upload.status <= 1 %>
         <%= link_icon_to :delete, 'Delete upload', upload_path(upload), {},
                          confirm: "This will remove the opload session and its uploaded data.\nAre you sure?", method: :delete %>
         <% end %>

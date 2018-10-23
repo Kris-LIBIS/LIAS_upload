@@ -11,7 +11,9 @@ LIASUpload::Application.routes.draw do
 
     end
 
-    match 'admin' => 'admin/admin#index', as: :admin
+    post '' => 'front_end#locale', as: :locale
+
+    get 'admin' => 'admin/admin#index', as: :admin
 
     namespace :admin do
 
@@ -26,12 +28,13 @@ LIASUpload::Application.routes.draw do
       resources :uploaded_files
     end
 
-    match 'uploads/:id/upload' => 'uploads#upload', as: :uploads_upload
-    match 'uploads/:id/add_files' => 'uploads#add_files', as: :uploads_add_files
+    get 'uploads/:id/upload' => 'uploads#upload', as: :uploads_upload
+    get 'uploads/:id/add_files' => 'uploads#add_files', as: :uploads_add_files
+    post 'file_upload', to: 'file_upload#create'
 
-    match 'my_account' => 'users#show', via: :get
-    match 'my_account/edit' => 'users#edit', via: :get
-    match 'my_account' => 'users#update', via: :put
+    get 'my_account' => 'users#show'
+    get 'my_account/edit' => 'users#edit'
+    get 'my_account' => 'users#update'
 
     root to: 'front_end#index', as: :front_end
 

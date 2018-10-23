@@ -3,7 +3,7 @@ require 'fileutils'
 require 'digest/md5'
 
 class Admin::UploadsController < ApplicationController
-  before_filter :administrator
+  before_action :administrator
 
   # GET /admin/uploads
   # GET /admin/uploads.json
@@ -43,7 +43,7 @@ class Admin::UploadsController < ApplicationController
     @upload = Upload.find(params[:id])
 
     respond_to do |format|
-      if @upload.update_attributes(params[:upload])
+      if @upload.update_attributes(upload_params)
         format.html { redirect_to admin_uploads_path, notice: 'Upload was successfully updated.' }
         format.json { head :no_content }
       else
@@ -63,6 +63,12 @@ class Admin::UploadsController < ApplicationController
       format.html { redirect_to admin_uploads_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def upload_params
+    params.require(:upload).permit(:date, :info, :name, :status, :user_id)
   end
 
 end

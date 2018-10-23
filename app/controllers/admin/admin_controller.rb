@@ -1,5 +1,5 @@
 class Admin::AdminController < ApplicationController
-  before_filter :administrator
+  before_action :administrator
 
   # GET /admin
   def index

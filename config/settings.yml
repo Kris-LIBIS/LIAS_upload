@@ -2,17 +2,17 @@ testing:
   inactivity_timeout:    60
   chunk_size:            1000
   files_per_request:     
-  upload_dir:            data
+  upload_dir:            /tmp/data
   
 development:
   inactivity_timeout:    60
   chunk_size:            1000000
   files_per_request:     
-  upload_dir:            data
+  upload_dir:            /tmp/data
 
 production:
   inactivity_timeout:    120
   chunk_size:            5000000
   files_per_request:     
-  upload_dir:            /nas/vol04/upload/flandrica
+  upload_dir:            /tmp/data
 

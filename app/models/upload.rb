@@ -1,9 +1,7 @@
 require 'fileutils'
 require 'pathname'
 
-class Upload < ActiveRecord::Base
-  #noinspection RailsParamDefResolve
-  attr_accessible :date, :info, :name, :status, :user_id
+class Upload < ApplicationRecord
 
   validates :name, :status, :user_id, presence: true
   validate :directory_valid
@@ -54,8 +52,6 @@ class Upload < ActiveRecord::Base
     super
   end
 
-  private
-
   def attribute_changed(attr, old_value, new_value)
     if attr == 'status' and old_value == 2 and new_value.to_i == 3
       checksum_file = self.full_path.to_s + '.checksums'
@@ -76,8 +72,12 @@ class Upload < ActiveRecord::Base
     self.name.gsub!(/^\//, '')
   end
 
+  private
+
   def delete_upload_dir
     FileUtils.rm_rf full_path
+    checksum_file = self.full_path.to_s + '.checksums'
+    FileUtils.rm checksum_file if File.exists? checksum_file
   end
 
 end

@@ -5,6 +5,7 @@ class UploadedFilesController < ApplicationController
   def index
     @upload = Upload.find(params[:upload_id])
     @uploaded_files = @upload.uploaded_files
+    @upload.uploaded_files.each {|file| file.selected = false }
 
     respond_to do |format|
       format.html # index.html.erb

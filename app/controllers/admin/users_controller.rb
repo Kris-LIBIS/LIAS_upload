@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_filter :administrator
+  before_action :administrator
 
   # GET /admin/users
   # GET /admin/users.json
@@ -47,7 +47,7 @@ class Admin::UsersController < ApplicationController
   # POST /admin/users
   # POST /admin/users.json
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
@@ -67,7 +67,7 @@ class Admin::UsersController < ApplicationController
 
     success = false
     begin
-      success = @user.update_attributes(params[:user])
+      success = @user.update_attributes(user_params)
     rescue Exception => e
       flash[:alert] = e.message
     end
@@ -104,5 +104,11 @@ class Admin::UsersController < ApplicationController
       format.html { redirect_to admin_users_url(organization_id: organization.id) }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:admin, :email, :name, :organization_id, :upload_dir, :password, :password_confirmation)
   end
 end

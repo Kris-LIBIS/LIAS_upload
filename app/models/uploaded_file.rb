@@ -1,15 +1,15 @@
 require 'fileutils'
 require 'pathname'
 
-class UploadedFile < ActiveRecord::Base
-  #noinspection RailsParamDefResolve
-  attr_accessible :file_name, :md5sum, :mimetype, :modification_date, :relative_path, :source_path, :upload_id, :local_path, :updated_at
+class UploadedFile < ApplicationRecord
 
   validate :file_path_valid
 
   belongs_to :upload
 
   before_destroy :delete_file
+
+  attribute :selected
 
   def relative_file_path
     [self.relative_path, self.file_name].reject {|i| i.nil? or i.empty?}.join('/')

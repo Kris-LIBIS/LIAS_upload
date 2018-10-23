@@ -2,13 +2,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  errors:
-    template:
-      body:        "There were problems with the following fields:"
-      header:
-        one:       "1 error prohibited this %{model} from being saved"
-        other:     "%{count} errors prohibited this %{model} from being saved"
-
 
 # menu
   menu:
@@ -23,15 +16,72 @@ en:
     login:    'Login'
     logout:   'Logout'
 
+  password:           'password'
+  password_confirm:   'confirm password'
+
+  date:
+    order:        ''
+    formats:
+      default:    '%d/%m/%Y'
+      short:      '%b %d'
+      long:       '%B %d, %Y'
+
   activerecord:
+    models:
+      organization:         'Organization'
+      organizations:        'Organizations'
+      user:                 'User'
+      users:                'Users'
+      upload:               'Upload'
+      uploads:              'Uploads'
+      uploaded_file:        'File'
+      uploaded_files:       'Files'
     attributes:
-      upload_file:
-        name:       'directory'
+      organization:
+        name:               'Name'
+        contact:            'Contact'
+        upload_directory:   'Upload directory'
+        users:              'Users'
+        actions:            'Actions'
+      user:
+        name:               'Name'
+        organization_id:    'Organization'
+        admin:              'Administrator'
+        upload_dir:         'Directory'
+        password_digest:    'Password digest'
+        email:              'Email'
+        password:           'Password'
+        confirmation:       'Confirmation'
+
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              confirmation: 'and confirmation do not match'
+
+      messages:
+        inclusion:          'is not valid'
+        blank:              'cannot be blank'
+        taken:              'is in use'
+
+  errors:
+    template:
+      body:                 'There were problems with the following fields:'
+      header:
+        one:                'An error prohibited this %{model} from being saved'
+        other:              '%{count} errors prohibited this %{model} from being saved'
 
   views:
     pagination:
-      first: "&laquo;"
-      last: "&raquo;"
-      previous: "&lsaquo;"
-      next: "&rsaquo;"
-      truncate: "&hellip;"
+      first:      '&laquo;'
+      last:       '&raquo;'
+      previous:   '&lsaquo;'
+      next:       '&rsaquo;'
+      truncate:   '&hellip;'
+    organisation:
+      infobox:    'Organization info'
+    links:
+      edit:       'Edit'
+      delete:     'Destroy'
+      delete_confirm: 'This will remove the organization and all its users and all the uploaded data.\nAre you sure?'

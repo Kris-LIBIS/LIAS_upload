@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
-  before_filter :set_i18n_locale_from_params
-  before_filter :authorize
-  after_filter :update_session
+  before_action :set_i18n_locale_from_params
+  before_action :authorize
+  after_action :update_session
   protect_from_forgery
   helper :tags
 
   protected
 
   def authorize
-    if request.format == Mime::HTML or request.format == '*/*'
+    if request.format == Mime[:html] or request.format == '*/*'
       if !session[:expire] or session[:expire] < Time.now
         redirect_to(login_path, notice: "You were logged out due to inactivity. Please log in again.", user_id: clear_session) and return
       end
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def administrator
-    if request.format == Mime::HTML
+    if request.format == Mime[:html]
       unless current_user_is_admin?
         # TODO: Flash does not show. Why?
         flash[:alert] = 'Access only allowed for administrators.'

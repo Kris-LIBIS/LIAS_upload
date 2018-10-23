@@ -2,13 +2,13 @@ require 'fileutils'
 
 class UploadsController < ApplicationController
   # workaround for bug in JUpload which fails to return the cookie properly
-  before_filter :authorize, except: :upload
+  before_action :authorize, except: :upload
 
   # GET /uploads
   # GET /uploads.json
   def index
-    @user = current_user
-    @uploads = current_user.uploads
+      @user = current_user
+      @uploads = current_user.uploads
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +46,7 @@ class UploadsController < ApplicationController
   # POST /uploads
   # POST /uploads.json
   def create
-    @upload = Upload.new(params[:upload])
+    @upload = Upload.new(upload_params)
     @upload.user = current_user
     @upload.date = Time.now
     @upload.status = 1
@@ -68,7 +68,7 @@ class UploadsController < ApplicationController
     upload = Upload.find(params[:id])
 
     respond_to do |format|
-      if upload.update_attributes(params[:upload])
+      if upload.update_attributes(upload_params)
         format.html { redirect_to uploads_path, notice: 'Upload was successfully updated.' }
         format.json { head :no_content }
       else
@@ -82,7 +82,7 @@ class UploadsController < ApplicationController
   # DELETE /uploads/1.json
   def destroy
     upload = Upload.find(params[:id])
-    if upload.status == 1
+    if upload.status <= 1
       upload.destroy
     else
       flash[:alert] = "Deleting an upload with status '#{upload.status_string}' is not allowed."
@@ -106,6 +106,7 @@ class UploadsController < ApplicationController
 
   # PUT /uploads/1/upload
   def upload
+    puts "params: #{params.inspect}"
     @upload = Upload.find(params[:id])
 
     respond_to do |format|
@@ -117,6 +118,8 @@ class UploadsController < ApplicationController
         end
 
         target_dir = base_dir + relative_path
+
+        FileUtils.mkdir_p(target_dir, mode: 0755)
 
         file_name = file_data.original_filename
         target_path = target_dir + file_name
@@ -182,6 +185,10 @@ class UploadsController < ApplicationController
   end
 
   private
+
+  def upload_params
+    params.require(:upload).permit(:date, :info, :name, :status, :user_id)
+  end
 
   def upload_dir(upload)
     upload.full_path

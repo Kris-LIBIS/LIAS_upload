@@ -1,12 +1,12 @@
 #noinspection RubyResolve
 class Admin::SessionController < ApplicationController
-  skip_before_filter :authorize
+  skip_before_action :authorize
 
   # GET /login
   def new
     begin
        user = User.find(params[:user_id]) if params[:user_id]
-      param[:name] = user.name
+      params[:name] = user.name
     rescue
     end
   end

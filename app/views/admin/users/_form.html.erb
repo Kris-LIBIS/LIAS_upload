@@ -45,7 +45,7 @@
       <div class="field">
         <%= f.label :organization_id %>
         <br/>
-        <%= f.collection_select :organization_id, Organization.all(order: "name ASC"), :id, :name %>
+        <%= f.collection_select :organization_id, Organization.all.order(name: :asc), :id, :name %>
       </div>
       <div class="field">
         <%= f.label :admin %>

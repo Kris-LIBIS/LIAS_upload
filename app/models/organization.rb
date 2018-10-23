@@ -1,9 +1,7 @@
 require 'fileutils'
 require 'pathname'
 
-class Organization < ActiveRecord::Base
-  #noinspection RailsParamDefResolve
-  attr_accessible :contact, :name, :upload_directory
+class Organization < ApplicationRecord
 
   validates_presence_of :name, :contact, :upload_directory
   validates_uniqueness_of :name, :upload_directory

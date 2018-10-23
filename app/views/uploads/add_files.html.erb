@@ -1,34 +1,20 @@
-<div class="upload_applet">
+<%= render 'fine_uploader_template' %>
 
-  <form name="post_info">
-    <input name="authenticity_token" type="hidden" value="<%= "#{form_authenticity_token}" if protect_against_forgery? %>">
-  </form>
-
-  <applet code="wjhk.jupload2.JUploadApplet" archive="/applets/jupload.jar"
-          mayscript="true" alt="The java plugin must be installed."
-          name="JUpload" width="640" height="400">
-    <param name="CODE" value="wjhk.jupload2.JUploadApplet" />
-    <param name="ARCHIVE" value="/applets/jupload.jar" />
-    <param name="lookAndFeel" value="system" />
-    <!--param name="ARCHIVE" value="/applets/jupload.jar,/applects/nimrodlf.signed.jar" />
-    <param name="lookAndFeel" value="com.nilo.plaf.nimrod.NimRODLookAndFeel" /-->
-    <!--param name="ARCHIVE" value="/applets/jupload.jar,/applets/OfficeLnFs.jar" />
-    <param name="lookAndFeel" value="org.fife.plaf.Office2003.Office2003LookAndFeel" /-->
-    <param name="lang" value="<%= session[:locale] %>" />
-    <param name="type" value="application/x-java-applet;version=1.5" />
-    <param name="mayscript" value="true" />
-    <param name="scriptable" value="true" />
-    <param name="serverProtocol" value="HTTP/1.1" />
-    <param name="postURL" value="/uploads/<%= @upload.id %>/upload" />
-    <param name="maxChunkSize" value="<%= APP_CONFIG['chunck_size'] %>" />
-    <param name="nbFilesPerRequest" value="<%= APP_CONFIG['files_per_request'] %>" />
-    <param name="sendMD5Sum" value="true" />
-    <param name="afterUploadURL" value="/uploads/<%= @upload.id %>" />
-    <param name="formData" value="post_info" />
-    <param name="showLogWindow" value="onError" />
-    <param name="debugLevel" value="<%= Rails.env == 'development' ? 99 : 0 %>"/>
-
-    Java 1.5 or higher plugin required.
-  </applet>
-
+<div id="uploader">
+  <script>
+    var uploader = new qq.FineUploader({
+        element: document.getElementById('uploader'),
+        template: 'qq-template',
+        debug: true,
+        request: {
+            endpoint: '/file_upload',
+            params: {
+                upload_id: <%= @upload.id %>
+            },
+            filenameParam: 'file_name',
+            uuidName: 'uuid',
+            totalFileSizeName: 'total_size'
+        }
+    })
+  </script>
 </div>

@@ -1,5 +1,5 @@
 class Admin::OrganizationsController < ApplicationController
-  before_filter :administrator
+  before_action :administrator
 
   # GET /admin/organizations
   # GET /admin/organizations.json
@@ -42,7 +42,7 @@ class Admin::OrganizationsController < ApplicationController
   # POST /admin/organizations
   # POST /admin/organizations.json
   def create
-    @organization = Organization.new(params[:organization])
+    @organization = Organization.new(org_params)
 
     respond_to do |format|
       if @organization.save
@@ -61,7 +61,7 @@ class Admin::OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
 
     respond_to do |format|
-      if @organization.update_attributes(params[:organization])
+      if @organization.update_attributes(org_params)
         format.html { redirect_to admin_organizations_path, notice: "Organization #{@organization.name} was successfully updated." }
         format.json { head :no_content }
       else
@@ -85,5 +85,11 @@ class Admin::OrganizationsController < ApplicationController
       format.html { redirect_to admin_organizations_path }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def org_params
+    params.require(:organization).permit(:name, :upload_directory, :contact)
   end
 end

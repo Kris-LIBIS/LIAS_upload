@@ -1,9 +1,9 @@
 require 'fileutils'
+require 'bcrypt'
 require 'pathname'
 
-class User < ActiveRecord::Base
-  #noinspection RailsParamDefResolve
-  attr_accessible :admin, :email, :name, :organization_id, :upload_dir, :password, :password_confirmation
+class User < ApplicationRecord
+
   belongs_to :organization
   has_many :uploads, :dependent => :destroy
 
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def ensure_an_admin_remains
-    raise "Can't delete last admin" if User.find_all_by_admin(true).size < 1
+    raise "Can't delete last admin" unless User.find_by(admin: true)
   end
 
   def delete_upload_dir
