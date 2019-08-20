@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '>= 4.2.6'
+gem 'rails', '>= 5.0.7'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -21,8 +21,8 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '>= 5.0.4'
-  gem 'coffee-rails'
+  gem 'sass-rails', '>= 5.0.7'
+  gem 'coffee-rails', '>= 4.1.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   platforms :ruby do
@@ -35,7 +35,7 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '>= 4.1.1'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt'
